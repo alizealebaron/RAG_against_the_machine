@@ -2,7 +2,7 @@
   <img src="https://github.com/alizealebaron/alizealebaron/blob/main/assets/rag.png" width="120"/>
 </p>
 <h3 align="center">
-  <em>Know your ennemy</em>
+  <em>"Who controls the past controls the future. Who controls the present controls the past"</em>
 </h3>
 
 ---
