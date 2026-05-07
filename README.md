@@ -2,7 +2,7 @@
   <img src="https://github.com/alizealebaron/alizealebaron/blob/main/assets/rag.png" width="120"/>
 </p>
 <h3 align="center">
-  <em>Master the race for resources before the deadline masters you.</em>
+  <em>Know your ennemy</em>
 </h3>
 
 ---
