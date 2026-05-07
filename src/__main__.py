@@ -10,12 +10,49 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/05/07 11:48:11 by alebaron                                #
+# @update   : 2026/05/07 15:25:45 by alebaron                                #
 # ************************************************************************** #
 
-def main():
-    print("Hello from rag-against-the-machine!")
+# +-------------------------------------------------------------------------+
+# |                               Importation                               |
+# +-------------------------------------------------------------------------+
 
 
-if __name__ == "__main__":
-    main()
+import fire
+
+
+# +-------------------------------------------------------------------------+
+# |                              CLI functions                              |
+# +-------------------------------------------------------------------------+
+
+
+def index(max_chunk_size: int):
+    print("Vous avez sélectionné l'option \"index\" !")
+
+
+def search():
+    print("Vous avez sélectionné l'option \"search\" !")
+
+
+def search_dataset():
+    print("Vous avez sélectionné l'option \"search_dataset\" !")
+
+
+def answer():
+    print("Vous avez sélectionné l'option \"answer\" !")
+
+
+def answer_dataset():
+    print("Vous avez sélectionné l'option \"answer_dataset\" !")
+
+
+def evaluate():
+    print("Vous avez sélectionné l'option \"evaluate\" !")
+
+
+# +-------------------------------------------------------------------------+
+# |                                  Main                                   |
+# +-------------------------------------------------------------------------+
+
+if __name__ == '__main__':
+    fire.Fire()

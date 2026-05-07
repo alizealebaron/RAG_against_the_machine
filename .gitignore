@@ -220,3 +220,5 @@ __marimo__/
 # Other things I guess
 
 .python-version
+datasets_public
+vllm-0.10.1

@@ -4,4 +4,11 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+	"fire>=0.7.1",
+	"numpy>=2.2.6",
+	"tdqm>=0.0.1"
+]
+
+[tool.uv.sources]
+vllm = {path="./vllm-0.10.1", editable = true}

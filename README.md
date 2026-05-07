@@ -31,4 +31,8 @@
 
 ## 🦆 Ressources
 
+### Documentations et guides
+
+- [Documention de python fire](https://google.github.io/python-fire/guide/)
+- [Guide d'utilisation de tdqm](https://www.datacamp.com/tutorial/tqdm-python)
 - 
