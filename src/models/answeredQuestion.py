@@ -6,11 +6,11 @@
 #         |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/       #
 #                                                                            #
 # ************************************************************************** #
-# @name   : minimalSource.py                                                 #
+# @name   : answeredQuestion.py                                              #
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
-# @creation : 2026/05/11 13:26:05 by alebaron                                #
-# @update   : 2026/05/11 13:38:31 by alebaron                                #
+# @creation : 2026/05/11 16:15:15 by alebaron                                #
+# @update   : 2026/05/11 16:37:28 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -20,38 +20,18 @@
 
 from typing import List
 from pydantic import BaseModel
+from src.models.minimalSource import MinimalSource
 
 
 # +-------------------------------------------------------------------------+
 # |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
 
-class MinimalSource(BaseModel):
+class AnsweredQuestion(BaseModel):
 
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
 
-    file_path: str
-    first_character_index: int
-    last_character_index: int
-
-
-class MinimalSearchResults(BaseModel):
-
-    # +---------------------------------------------------------------------+
-    # |                            Attributs                                |
-    # +---------------------------------------------------------------------+
-
-    question_id: str
-    question: str
-    retrieved_sources: List[MinimalSource]
-
-
-class MinimalAnswer(MinimalSearchResults):
-
-    # +---------------------------------------------------------------------+
-    # |                            Attributs                                |
-    # +---------------------------------------------------------------------+
-
+    sources: List[MinimalSource]
     answer: str

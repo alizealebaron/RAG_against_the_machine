@@ -6,11 +6,11 @@
 #         |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/       #
 #                                                                            #
 # ************************************************************************** #
-# @name   : questions.py                                                     #
+# @name   : studentSearchResultsAndAnswer.py                                 #
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
-# @creation : 2026/05/11 13:28:54 by alebaron                                #
-# @update   : 2026/05/11 13:38:50 by alebaron                                #
+# @creation : 2026/05/11 16:40:05 by alebaron                                #
+# @update   : 2026/05/11 16:46:48 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,31 +18,19 @@
 # +-------------------------------------------------------------------------+
 
 
-import uuid
 from typing import List
-from pydantic import BaseModel, Field
-from src.models.minimal import MinimalSource
+from src.models.minimalAnswer import MinimalAnswer
+from src.models.studentSearchResults import StudentSearchResults
 
 
 # +-------------------------------------------------------------------------+
 # |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
 
-class UnansweredQuestion(BaseModel):
+class StudentSearchResultsAndAnswer(StudentSearchResults):
 
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
 
-    question_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    question: str
-
-
-class AnsweredQuestion(BaseModel):
-
-    # +---------------------------------------------------------------------+
-    # |                            Attributs                                |
-    # +---------------------------------------------------------------------+
-
-    sources: List[MinimalSource]
-    answer: str
+    search_results: List[MinimalAnswer]

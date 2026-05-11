@@ -6,21 +6,32 @@
 #         |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/       #
 #                                                                            #
 # ************************************************************************** #
-# @name   : index.py                                                         #
+# @name   : studentSearchResults.py                                          #
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
-# @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/05/11 16:14:27 by alebaron                                #
+# @creation : 2026/05/11 13:37:18 by alebaron                                #
+# @update   : 2026/05/11 16:45:57 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
 # |                               Importation                               |
 # +-------------------------------------------------------------------------+
 
+
+from typing import List
+from pydantic import BaseModel
+from src.models.minimalSearchResults import MinimalSearchResults
+
+
 # +-------------------------------------------------------------------------+
-# |                                  Main                                   |
+# |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
 
-def cli_index(max_chunk_size: int):
-    
-    lst_
+class StudentSearchResults(BaseModel):
+
+    # +---------------------------------------------------------------------+
+    # |                            Attributs                                |
+    # +---------------------------------------------------------------------+
+
+    search_results: List[MinimalSearchResults]
+    k: int

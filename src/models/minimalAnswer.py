@@ -6,11 +6,11 @@
 #         |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/       #
 #                                                                            #
 # ************************************************************************** #
-# @name   : student.py                                                       #
+# @name   : minimalAnswer.py                                                 #
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
-# @creation : 2026/05/11 13:37:18 by alebaron                                #
-# @update   : 2026/05/11 13:39:31 by alebaron                                #
+# @creation : 2026/05/11 16:44:06 by alebaron                                #
+# @update   : 2026/05/11 16:44:36 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,29 +18,17 @@
 # +-------------------------------------------------------------------------+
 
 
-from typing import List
-from pydantic import BaseModel
-from src.models.minimal import MinimalAnswer, MinimalSearchResults
+from minimalSearchResults import MinimalSearchResults
 
 
 # +-------------------------------------------------------------------------+
 # |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
 
-class StudentSearchResults(BaseModel):
+class MinimalAnswer(MinimalSearchResults):
 
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
 
-    search_results: List[MinimalSearchResults]
-    k: int
-
-
-class StudentSearchResultsAndAnswer(StudentSearchResults):
-
-    # +---------------------------------------------------------------------+
-    # |                            Attributs                                |
-    # +---------------------------------------------------------------------+
-
-    search_results: List[MinimalAnswer]
+    answer: str

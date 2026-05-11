@@ -6,21 +6,33 @@
 #         |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/       #
 #                                                                            #
 # ************************************************************************** #
-# @name   : index.py                                                         #
+# @name   : minimalSearchResults.py                                          #
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
-# @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/05/11 16:14:27 by alebaron                                #
+# @creation : 2026/05/11 16:41:11 by alebaron                                #
+# @update   : 2026/05/11 16:41:46 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
 # |                               Importation                               |
 # +-------------------------------------------------------------------------+
 
+
+from typing import List
+from pydantic import BaseModel
+from src.models.minimalSource import MinimalSource
+
+
 # +-------------------------------------------------------------------------+
-# |                                  Main                                   |
+# |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
 
-def cli_index(max_chunk_size: int):
-    
-    lst_
+class MinimalSearchResults(BaseModel):
+
+    # +---------------------------------------------------------------------+
+    # |                            Attributs                                |
+    # +---------------------------------------------------------------------+
+
+    question_id: str
+    question: str
+    retrieved_sources: List[MinimalSource]

@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/05/11 09:56:47 by alebaron                                #
+# @update   : 2026/05/11 16:14:11 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -21,6 +21,7 @@
 try:
     import sys
     import fire
+    from src.cli_functions.index import cli_index
 except Exception:
     print("ImportationError: Some package are not present. Please do "
           "`uv sync` to install a python env.")
@@ -33,7 +34,7 @@ except Exception:
 
 
 def index(max_chunk_size: int):
-    print("Vous avez sélectionné l'option \"index\" !")
+    cli_index(max_chunk_size)
 
 
 def search():

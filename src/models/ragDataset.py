@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/11 13:34:10 by alebaron                                #
-# @update   : 2026/05/11 13:34:54 by alebaron                                #
+# @update   : 2026/05/11 16:45:21 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -20,7 +20,8 @@
 
 from typing import List
 from pydantic import BaseModel
-from questions import AnsweredQuestion, UnansweredQuestion
+from src.models.unansweredQuestion import UnansweredQuestion
+from src.models.answeredQuestion import AnsweredQuestion
 
 
 # +-------------------------------------------------------------------------+
