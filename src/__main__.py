@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/05/07 15:25:45 by alebaron                                #
+# @update   : 2026/05/11 09:56:47 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,7 +18,13 @@
 # +-------------------------------------------------------------------------+
 
 
-import fire
+try:
+    import sys
+    import fire
+except Exception:
+    print("ImportationError: Some package are not present. Please do "
+          "`uv sync` to install a python env.")
+    sys.exit(2)
 
 
 # +-------------------------------------------------------------------------+

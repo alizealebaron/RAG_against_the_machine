@@ -35,4 +35,13 @@
 
 - [Documention de python fire](https://google.github.io/python-fire/guide/)
 - [Guide d'utilisation de tdqm](https://www.datacamp.com/tutorial/tqdm-python)
-- 
+- [BM25](https://pypi.org/project/BM25/)
+
+### Mesure de statistiques
+
+- [TF-IDF (Term Frequency-Inverse Document Frequency)](https://cuik.io/blog/lexique-seo/tf-idf-term-frequency-inverse-document-frequency/#:~:text=D%C3%A9finition,inverse%20du%20document%20(IDF).)
+- [TF*IDF](https://fr.ryte.com/wiki/TF*IDF)
+- [Understanding TF-IDF (Term Frequency-Inverse Document Frequency)](https://www.geeksforgeeks.org/machine-learning/understanding-tf-idf-term-frequency-inverse-document-frequency/)
+
+- [Comprendre et implémenter l'algo de score BM25](https://dev.to/pykpyky/comprendre-et-implementer-lalgo-de-score-bm25-47af)
+- [What is BM25 (Best Matching 25) Algorithm](https://www.geeksforgeeks.org/nlp/what-is-bm25-best-matching-25-algorithm/)
