@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/11 16:15:15 by alebaron                                #
-# @update   : 2026/05/11 16:37:28 by alebaron                                #
+# @update   : 2026/05/12 10:52:54 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -19,15 +19,15 @@
 
 
 from typing import List
-from pydantic import BaseModel
 from src.models.minimalSource import MinimalSource
+from src.models.unansweredQuestion import UnansweredQuestion
 
 
 # +-------------------------------------------------------------------------+
 # |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
 
-class AnsweredQuestion(BaseModel):
+class AnsweredQuestion(UnansweredQuestion):
 
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
@@ -35,3 +35,5 @@ class AnsweredQuestion(BaseModel):
 
     sources: List[MinimalSource]
     answer: str
+    difficulty: str
+    is_valid: bool

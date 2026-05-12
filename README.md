@@ -45,3 +45,9 @@
 
 - [Comprendre et implémenter l'algo de score BM25](https://dev.to/pykpyky/comprendre-et-implementer-lalgo-de-score-bm25-47af)
 - [What is BM25 (Best Matching 25) Algorithm](https://www.geeksforgeeks.org/nlp/what-is-bm25-best-matching-25-algorithm/)
+
+### L'indexing
+
+- [Tout ce que vous devez savoir sur le RAG et ses variantes](https://datascientist.fr/blog/guide-rag-2025-retrieval-augmented-generation?utm_source=begenai.com&utm_campaign=article-webanalyste.com&utm_medium=referral)
+- [Qu’est-ce que le RAG Indexing et comment ça marche ?](https://www.begenai.com/quest-ce-que-le-rag-indexing-et-comment-ca-marche/#:~:text=Le%20RAG%20Indexing%20est%20une,recherche%20et%20la%20g%C3%A9n%C3%A9ration%20automatis%C3%A9e.)
+- [Chunking : découper vos documents pour le RAG](https://blog.stephane-robert.info/docs/developper/programmation/python/rag-chunking/#:~:text=Strat%C3%A9gie%201%20%3A%20Chunking%20fixe%20(caract%C3%A8res),-Section%20intitul%C3%A9e%20%C2%AB%20Strat%C3%A9gie&text=La%20m%C3%A9thode%20la%20plus%20simple,%22%22D%C3%A9coupage%20fixe%20avec%20overlap.)

@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/05/11 16:14:11 by alebaron                                #
+# @update   : 2026/05/12 15:34:22 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -21,7 +21,7 @@
 try:
     import sys
     import fire
-    from src.cli_functions.index import cli_index
+    from src.cli_functions.index.index import cli_index
 except Exception:
     print("ImportationError: Some package are not present. Please do "
           "`uv sync` to install a python env.")

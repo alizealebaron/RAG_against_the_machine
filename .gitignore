@@ -222,3 +222,5 @@ __marimo__/
 .python-version
 datasets_public
 vllm-0.10.1
+test*
+debug*

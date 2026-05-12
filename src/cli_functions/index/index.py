@@ -10,17 +10,28 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/05/11 16:14:27 by alebaron                                #
+# @update   : 2026/05/12 17:22:30 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
 # |                               Importation                               |
 # +-------------------------------------------------------------------------+
 
+
+import os
+from src.cli_functions.index.chunk import make_chunk_recrusive
+
+
 # +-------------------------------------------------------------------------+
 # |                                  Main                                   |
 # +-------------------------------------------------------------------------+
 
 def cli_index(max_chunk_size: int):
-    
-    lst_
+
+    list_files_recursively("data/raw/vllm-0.10.1/")
+
+
+def list_files_recursively(directory):
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            print(os.path.join(root, file))
