@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/12 15:21:04 by alebaron                                #
-# @update   : 2026/05/14 11:22:02 by alebaron                                #
+# @update   : 2026/05/14 15:19:32 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,47 +18,76 @@
 # +-------------------------------------------------------------------------+
 
 
-from typing import List, Any
+import re
+from typing import Any
+from astchunk import ASTChunkBuilder
 
 
 # +-------------------------------------------------------------------------+
 # |                                  Main                                   |
 # +-------------------------------------------------------------------------+
 
-def make_chunk_recrusive(text: str, chunk_max_size: int, separators: List[str]) -> list[str]:
+def make_chunk_md(text: str, chunk_max_size: int) -> list[str]:
 
-    if separators is None:
-        separators = ["\n\n", "\n", ". "]
-
-    if not separators:
-        # Plus de séparateurs : découpage brutal
-        return [text[i:i+chunk_max_size] for i in range(0, len(text), chunk_max_size)]
-
-    sep = separators[0]
-    parts = text.split(sep)
-
+    header_pattern = r"^#{1,3}\s+.+$"
+    lines = text.split('\n')
     chunks = []
-    current_chunk = ""
+    current_chunk = []
+    current_header = ""
+    current_length = 0
 
-    for part in parts:
-        # Si ajouter cette partie dépasse la limite
-        if len(current_chunk) + len(part) + len(sep) > chunk_max_size:
+    for line in lines:
+        # Détection d'un titre
+        if re.match(header_pattern, line, re.MULTILINE):
+            # Sauvegarder le chunk précédent
             if current_chunk:
-                chunks.append(current_chunk.strip())
+                chunk_text = '\n'.join(current_chunk).strip()
+                if chunk_text:
+                    chunks.append(chunk_text)
 
-            # Si la partie seule est trop grande, récursion
-            if len(part) > chunk_max_size:
-                chunks.extend(make_chunk_recrusive(part, chunk_max_size, separators[1:]))
-                current_chunk = ""
-            else:
-                current_chunk = part
+            current_header = line
+            current_chunk = [line]
+            current_length = len(line)
         else:
-            current_chunk += (sep if current_chunk else "") + part
+            # Vérifier la limite de taille
+            if current_length + len(line) > chunk_max_size and current_chunk:
+                chunk_text = '\n'.join(current_chunk).strip()
+                if chunk_text:
+                    chunks.append(chunk_text)
+                # Nouveau chunk avec le header pour le contexte
+                current_chunk = [current_header, line] if current_header else [line]
+                current_length = len(current_header) + len(line)
+            else:
+                current_chunk.append(line)
+                current_length += len(line) + 1
 
-    if current_chunk.strip():
-        chunks.append(current_chunk.strip())
+    # Dernier chunk
+    if current_chunk:
+        chunk_text = '\n'.join(current_chunk).strip()
+        if chunk_text:
+            chunks.append(chunk_text)
 
     return chunks
+
+
+def make_chunk_py(text: str, chunk_max_size: int) -> dict[str, str]:
+
+    dict_chunk = {}
+
+    # Initialize the chunk builder
+    configs = {
+        "max_chunk_size": chunk_max_size,
+        "language": "python",
+        "metadata_template": "default"
+    }
+
+    chunk_builder = ASTChunkBuilder(**configs)
+    chunks = chunk_builder.chunkify(text)
+
+    for i, chunk in enumerate(chunks):
+        dict_chunk[f"chunk_{i}"] = chunk['content']
+
+    return dict_chunk
 
 
 def convert_lst_chunk_to_dict(lst_chunk: list[str]) -> dict[Any, Any]:

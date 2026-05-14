@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/05/14 11:36:21 by alebaron                                #
+# @update   : 2026/05/14 15:21:07 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -21,7 +21,7 @@
 import os
 import json
 from src.utils.error import exit_error, IndexError
-from src.cli_functions.index.chunk import make_chunk_recrusive
+from src.cli_functions.index.chunk import make_chunk_md, make_chunk_py
 from src.cli_functions.index.chunk import convert_lst_chunk_to_dict
 
 
@@ -33,6 +33,7 @@ def cli_index(max_chunk_size: int):
 
     directory = "data/raw/vllm-0.10.1/"
     lst_chunk = []
+    dict_chunk = {}
 
     try:
 
@@ -47,11 +48,10 @@ def cli_index(max_chunk_size: int):
                         content = f.read()
 
                     if (path.endswith(".md")):
-                        lst_chunk = make_chunk_recrusive(content, max_chunk_size, None)
+                        lst_chunk = make_chunk_md(content, max_chunk_size)
+                        dict_chunk = convert_lst_chunk_to_dict(lst_chunk)
                     elif (path.endswith(".py")):
-                        lst_chunk = make_chunk_recrusive(content, max_chunk_size, None)
-
-                    dict_chunk = convert_lst_chunk_to_dict(lst_chunk)
+                        dict_chunk = make_chunk_py(content, max_chunk_size)
 
                     out_dir = "data/processed/chunks"
                     out_name = file + ".json"
