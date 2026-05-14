@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/12 15:21:04 by alebaron                                #
-# @update   : 2026/05/12 17:13:52 by alebaron                                #
+# @update   : 2026/05/14 11:22:02 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,7 +18,7 @@
 # +-------------------------------------------------------------------------+
 
 
-from typing import List
+from typing import List, Any
 
 
 # +-------------------------------------------------------------------------+
@@ -59,3 +59,16 @@ def make_chunk_recrusive(text: str, chunk_max_size: int, separators: List[str]) 
         chunks.append(current_chunk.strip())
 
     return chunks
+
+
+def convert_lst_chunk_to_dict(lst_chunk: list[str]) -> dict[Any, Any]:
+
+    dict_chunk = {}
+
+    i = 0
+    for chunk in lst_chunk:
+
+        dict_chunk[f"chunk_{i}"] = chunk
+        i += 1
+
+    return (dict_chunk)

@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/05/12 17:22:30 by alebaron                                #
+# @update   : 2026/05/14 11:36:21 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -19,7 +19,10 @@
 
 
 import os
+import json
+from src.utils.error import exit_error, IndexError
 from src.cli_functions.index.chunk import make_chunk_recrusive
+from src.cli_functions.index.chunk import convert_lst_chunk_to_dict
 
 
 # +-------------------------------------------------------------------------+
@@ -28,10 +31,37 @@ from src.cli_functions.index.chunk import make_chunk_recrusive
 
 def cli_index(max_chunk_size: int):
 
-    list_files_recursively("data/raw/vllm-0.10.1/")
+    directory = "data/raw/vllm-0.10.1/"
+    lst_chunk = []
 
+    try:
 
-def list_files_recursively(directory):
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            print(os.path.join(root, file))
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+
+                if (file.endswith(".md") or file.endswith(".py")):
+
+                    path = (os.path.join(root, file))
+
+                    with open(path, "r") as f:
+                        content = f.read()
+
+                    if (path.endswith(".md")):
+                        lst_chunk = make_chunk_recrusive(content, max_chunk_size, None)
+                    elif (path.endswith(".py")):
+                        lst_chunk = make_chunk_recrusive(content, max_chunk_size, None)
+
+                    dict_chunk = convert_lst_chunk_to_dict(lst_chunk)
+
+                    out_dir = "data/processed/chunks"
+                    out_name = file + ".json"
+
+                    os.makedirs(out_dir, exist_ok=True)
+
+                    output_file = os.path.join(out_dir, out_name)
+                    with open(output_file, "w") as f:
+                        json.dump(dict_chunk, f, indent=2)
+
+    except Exception as e:
+        print(e)
+        exit_error(IndexError(), e)

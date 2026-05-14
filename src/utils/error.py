@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/27 14:26:28 by alebaron                                #
-# @update   : 2026/05/12 10:58:10 by alebaron                                #
+# @update   : 2026/05/14 11:00:19 by alebaron                                #
 # ************************************************************************** #
 
 # +--------------------------------------------------------------------------+
@@ -27,6 +27,13 @@ from typing import NoReturn
 class FileError(Exception):
     """
     Exception raised for errors in the files.
+    """
+    pass
+
+
+class IndexError(Exception):
+    """
+    Exception raised for errors in the index.
     """
     pass
 
