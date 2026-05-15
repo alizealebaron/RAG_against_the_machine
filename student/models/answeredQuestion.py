@@ -6,11 +6,11 @@
 #         |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/       #
 #                                                                            #
 # ************************************************************************** #
-# @name   : ragDataset.py                                                    #
+# @name   : answeredQuestion.py                                              #
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
-# @creation : 2026/05/11 13:34:10 by alebaron                                #
-# @update   : 2026/05/11 16:45:21 by alebaron                                #
+# @creation : 2026/05/11 16:15:15 by alebaron                                #
+# @update   : 2026/05/15 10:55:57 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -19,19 +19,21 @@
 
 
 from typing import List
-from pydantic import BaseModel
-from src.models.unansweredQuestion import UnansweredQuestion
-from src.models.answeredQuestion import AnsweredQuestion
+from student.models.minimalSource import MinimalSource
+from student.models.unansweredQuestion import UnansweredQuestion
 
 
 # +-------------------------------------------------------------------------+
 # |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
 
-class RagDataset(BaseModel):
+class AnsweredQuestion(UnansweredQuestion):
 
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
 
-    rag_questions: List[AnsweredQuestion | UnansweredQuestion]
+    sources: List[MinimalSource]
+    answer: str
+    difficulty: str
+    is_valid: bool

@@ -10,24 +10,24 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/05/15 10:50:20 by alebaron                                #
+# @update   : 2026/05/15 11:09:56 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
-# |                               Importation                               |
+# |                              Importation                                |
 # +-------------------------------------------------------------------------+
 
 
 import os
 import json
 from tqdm import tqdm
-from src.utils.error import exit_error, IndexError
-from src.cli_functions.index.chunk import make_chunk_md, make_chunk_py
-from src.cli_functions.index.chunk import convert_lst_chunk_to_dict
+from student.utils.error import exit_error, IndexError
+from student.cli_functions.index.chunk import make_chunk_md, make_chunk_py
+from student.cli_functions.index.chunk import convert_lst_chunk_to_dict
 
 
 # +-------------------------------------------------------------------------+
-# |                                  Main                                   |
+# |                                Methods                                  |
 # +-------------------------------------------------------------------------+
 
 def cli_index(max_chunk_size: int):
@@ -36,9 +36,10 @@ def cli_index(max_chunk_size: int):
     lst_chunk = []
     dict_chunk = {}
     nb_doc = get_nb_doc(directory)
-    progress_bar = tqdm(total=nb_doc)
 
     try:
+        max_chunk_size = int(max_chunk_size)
+        progress_bar = tqdm(total=nb_doc)
 
         for root, dirs, files in os.walk(directory):
             for file in files:
@@ -71,7 +72,6 @@ def cli_index(max_chunk_size: int):
         os.makedirs(out_dir, exist_ok=True)
 
     except Exception as e:
-        print(e)
         exit_error(IndexError(), e)
 
 

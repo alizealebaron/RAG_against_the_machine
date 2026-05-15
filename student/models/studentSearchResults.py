@@ -6,11 +6,11 @@
 #         |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/       #
 #                                                                            #
 # ************************************************************************** #
-# @name   : answeredQuestion.py                                              #
+# @name   : studentSearchResults.py                                          #
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
-# @creation : 2026/05/11 16:15:15 by alebaron                                #
-# @update   : 2026/05/12 10:52:54 by alebaron                                #
+# @creation : 2026/05/11 13:37:18 by alebaron                                #
+# @update   : 2026/05/15 10:55:57 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -19,21 +19,19 @@
 
 
 from typing import List
-from src.models.minimalSource import MinimalSource
-from src.models.unansweredQuestion import UnansweredQuestion
+from pydantic import BaseModel
+from student.models.minimalSearchResults import MinimalSearchResults
 
 
 # +-------------------------------------------------------------------------+
 # |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
 
-class AnsweredQuestion(UnansweredQuestion):
+class StudentSearchResults(BaseModel):
 
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
 
-    sources: List[MinimalSource]
-    answer: str
-    difficulty: str
-    is_valid: bool
+    search_results: List[MinimalSearchResults]
+    k: int

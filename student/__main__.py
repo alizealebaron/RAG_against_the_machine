@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/05/14 11:30:12 by alebaron                                #
+# @update   : 2026/05/15 11:26:50 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -21,7 +21,9 @@
 try:
     import sys
     import fire
-    from src.cli_functions.index.index import cli_index
+    from student.cli_functions.index.index import cli_index
+    from student.cli_functions.search.search import cli_search
+    from student.cli_functions.answer.answer import cli_answer
 except Exception:
     print("ImportationError: Some package are not present. Please do "
           "`uv sync` to install a python env.")
@@ -37,16 +39,16 @@ def index(max_chunk_size: int):
     cli_index(max_chunk_size)
 
 
-def search():
-    print("Vous avez sélectionné l'option \"search\" !")
+def search(question: str, k=10):
+    cli_search(question, k)
 
 
 def search_dataset():
     print("Vous avez sélectionné l'option \"search_dataset\" !")
 
 
-def answer():
-    print("Vous avez sélectionné l'option \"answer\" !")
+def answer(question: str, k=10):
+    cli_answer(question, k)
 
 
 def answer_dataset():

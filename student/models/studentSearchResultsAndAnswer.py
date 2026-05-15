@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/11 16:40:05 by alebaron                                #
-# @update   : 2026/05/11 16:46:48 by alebaron                                #
+# @update   : 2026/05/15 10:55:57 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -19,8 +19,8 @@
 
 
 from typing import List
-from src.models.minimalAnswer import MinimalAnswer
-from src.models.studentSearchResults import StudentSearchResults
+from student.models.minimalAnswer import MinimalAnswer
+from student.models.studentSearchResults import StudentSearchResults
 
 
 # +-------------------------------------------------------------------------+

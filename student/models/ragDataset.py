@@ -6,11 +6,11 @@
 #         |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/       #
 #                                                                            #
 # ************************************************************************** #
-# @name   : minimalSearchResults.py                                          #
+# @name   : ragDataset.py                                                    #
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
-# @creation : 2026/05/11 16:41:11 by alebaron                                #
-# @update   : 2026/05/11 16:41:46 by alebaron                                #
+# @creation : 2026/05/11 13:34:10 by alebaron                                #
+# @update   : 2026/05/15 10:55:57 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -20,19 +20,18 @@
 
 from typing import List
 from pydantic import BaseModel
-from src.models.minimalSource import MinimalSource
+from student.models.unansweredQuestion import UnansweredQuestion
+from student.models.answeredQuestion import AnsweredQuestion
 
 
 # +-------------------------------------------------------------------------+
 # |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
 
-class MinimalSearchResults(BaseModel):
+class RagDataset(BaseModel):
 
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
 
-    question_id: str
-    question: str
-    retrieved_sources: List[MinimalSource]
+    rag_questions: List[AnsweredQuestion | UnansweredQuestion]

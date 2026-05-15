@@ -6,32 +6,25 @@
 #         |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/       #
 #                                                                            #
 # ************************************************************************** #
-# @name   : studentSearchResults.py                                          #
+# @name   : search.py                                                        #
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
-# @creation : 2026/05/11 13:37:18 by alebaron                                #
-# @update   : 2026/05/11 16:45:57 by alebaron                                #
+# @creation : 2026/05/15 11:16:02 by alebaron                                #
+# @update   : 2026/05/15 11:26:34 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
-# |                               Importation                               |
+# |                              Importation                                |
 # +-------------------------------------------------------------------------+
 
 
-from typing import List
-from pydantic import BaseModel
-from src.models.minimalSearchResults import MinimalSearchResults
+
 
 
 # +-------------------------------------------------------------------------+
-# |                                 Classe                                  |
+# |                                Methods                                  |
 # +-------------------------------------------------------------------------+
 
-class StudentSearchResults(BaseModel):
+def cli_search(question: str, k: int):
 
-    # +---------------------------------------------------------------------+
-    # |                            Attributs                                |
-    # +---------------------------------------------------------------------+
-
-    search_results: List[MinimalSearchResults]
-    k: int
+    print(f"Search : Question : {question}, k : {k}")

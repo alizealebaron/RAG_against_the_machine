@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/12 10:53:43 by alebaron                                #
-# @update   : 2026/05/12 13:10:46 by alebaron                                #
+# @update   : 2026/05/15 10:55:57 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -20,9 +20,9 @@
 
 from typing import List
 from json import JSONDecodeError, load
-from src.models.answeredQuestion import AnsweredQuestion
-from src.models.unansweredQuestion import UnansweredQuestion
-from src.utils.error import exit_error, FileError
+from student.models.answeredQuestion import AnsweredQuestion
+from student.models.unansweredQuestion import UnansweredQuestion
+from student.utils.error import exit_error, FileError
 
 
 # +-------------------------------------------------------------------------+
