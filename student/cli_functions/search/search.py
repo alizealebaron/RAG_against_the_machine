@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/15 11:16:02 by alebaron                                #
-# @update   : 2026/05/15 11:26:34 by alebaron                                #
+# @update   : 2026/05/15 12:48:49 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,7 +18,8 @@
 # +-------------------------------------------------------------------------+
 
 
-
+import os
+from student.cli_functions.index.index import cli_index
 
 
 # +-------------------------------------------------------------------------+
@@ -27,4 +28,13 @@
 
 def cli_search(question: str, k: int):
 
-    print(f"Search : Question : {question}, k : {k}")
+    # On chunk les documents si ça n'a pas déjà été fait
+
+    index_path = "data/processed/chunks"
+
+    if (os.path.exists(index_path) is False):
+        cli_index(2000)
+
+    # Et ensuite on cherche les documents pertinents
+
+    

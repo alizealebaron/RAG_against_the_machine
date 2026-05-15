@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/05/15 11:26:50 by alebaron                                #
+# @update   : 2026/05/15 12:03:46 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -31,12 +31,12 @@ except Exception:
 
 
 # +-------------------------------------------------------------------------+
-# |                              CLI functions                              |
+# |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
-
 
 def index(max_chunk_size: int):
     cli_index(max_chunk_size)
+    print("Ingestion complete! Indices saved under data/processed/")
 
 
 def search(question: str, k=10):

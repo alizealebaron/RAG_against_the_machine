@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/05/15 11:09:56 by alebaron                                #
+# @update   : 2026/05/15 12:03:06 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -39,7 +39,7 @@ def cli_index(max_chunk_size: int):
 
     try:
         max_chunk_size = int(max_chunk_size)
-        progress_bar = tqdm(total=nb_doc)
+        progress_bar = tqdm(total=nb_doc, desc="Chunking vllm files")
 
         for root, dirs, files in os.walk(directory):
             for file in files:
