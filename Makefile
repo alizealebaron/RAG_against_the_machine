@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/26 12:46:41 by alebaron                                #
-# @update   : 2026/04/03 16:26:33 by alebaron                                #
+# @update   : 2026/05/15 10:50:51 by alebaron                                #
 # ************************************************************************** #
 
 # ==========================
@@ -71,6 +71,7 @@ debug:
 clean :
 	@echo "$(RED)$(BOLD)[Cleaning useless objects of ${NAME}]$(RESET)"
 	@rm -rf .mypy_cache
+	@rm -rf data/processed
 	@find . -type d -name "__pycache__" -exec rm -rf {} +
 
 # Checking flake8 and mypy norm
