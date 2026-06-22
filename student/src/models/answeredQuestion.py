@@ -6,10 +6,10 @@
 #         |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/       #
 #                                                                            #
 # ************************************************************************** #
-# @name   : studentSearchResultsAndAnswer.py                                 #
+# @name   : answeredQuestion.py                                              #
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
-# @creation : 2026/05/11 16:40:05 by alebaron                                #
+# @creation : 2026/05/11 16:15:15 by alebaron                                #
 # @update   : 2026/05/15 10:55:57 by alebaron                                #
 # ************************************************************************** #
 
@@ -19,18 +19,21 @@
 
 
 from typing import List
-from student.models.minimalAnswer import MinimalAnswer
-from student.models.studentSearchResults import StudentSearchResults
+from .minimalSource import MinimalSource
+from .unansweredQuestion import UnansweredQuestion
 
 
 # +-------------------------------------------------------------------------+
 # |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
 
-class StudentSearchResultsAndAnswer(StudentSearchResults):
+class AnsweredQuestion(UnansweredQuestion):
 
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
 
-    search_results: List[MinimalAnswer]
+    sources: List[MinimalSource]
+    answer: str
+    difficulty: str
+    is_valid: bool

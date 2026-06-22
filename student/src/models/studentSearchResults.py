@@ -6,35 +6,32 @@
 #         |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/       #
 #                                                                            #
 # ************************************************************************** #
-# @name   : search.py                                                        #
+# @name   : studentSearchResults.py                                          #
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
-# @creation : 2026/05/15 11:16:02 by alebaron                                #
-# @update   : 2026/05/15 12:48:49 by alebaron                                #
+# @creation : 2026/05/11 13:37:18 by alebaron                                #
+# @update   : 2026/05/15 10:55:57 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
-# |                              Importation                                |
+# |                               Importation                               |
 # +-------------------------------------------------------------------------+
 
 
-import os
-from student.cli_functions.index.index import cli_index
+from typing import List
+from pydantic import BaseModel
+from .minimalSearchResults import MinimalSearchResults
 
 
 # +-------------------------------------------------------------------------+
-# |                                Methods                                  |
+# |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
 
-def cli_search(question: str, k: int):
+class StudentSearchResults(BaseModel):
 
-    # On chunk les documents si ça n'a pas déjà été fait
+    # +---------------------------------------------------------------------+
+    # |                            Attributs                                |
+    # +---------------------------------------------------------------------+
 
-    index_path = "data/processed/chunks"
-
-    if (os.path.exists(index_path) is False):
-        cli_index(2000)
-
-    # Et ensuite on cherche les documents pertinents
-
-    
+    search_results: List[MinimalSearchResults]
+    k: int

@@ -18,7 +18,7 @@
 # +-------------------------------------------------------------------------+
 
 
-from minimalSearchResults import MinimalSearchResults
+from .minimalSearchResults import MinimalSearchResults
 
 
 # +-------------------------------------------------------------------------+

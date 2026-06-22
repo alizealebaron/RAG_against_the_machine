@@ -18,16 +18,16 @@
 # +-------------------------------------------------------------------------+
 
 
-try:
-    import sys
-    import fire
-    from student.cli_functions.index.index import cli_index
-    from student.cli_functions.search.search import cli_search
-    from student.cli_functions.answer.answer import cli_answer
-except Exception:
-    print("ImportationError: Some package are not present. Please do "
-          "`uv sync` to install a python env.")
-    sys.exit(2)
+# try:
+import sys
+import fire
+from .cli_functions.index.index import cli_index
+from .cli_functions.search.search import cli_search
+from .cli_functions.answer.answer import cli_answer
+# except Exception:
+#     print("ImportationError: Some package are not present. Please do "
+#           "`uv sync` to install a python env.")
+#     sys.exit(2)
 
 
 # +-------------------------------------------------------------------------+

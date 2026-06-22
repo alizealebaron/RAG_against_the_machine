@@ -17,13 +17,19 @@
 # |                              Importation                                |
 # +-------------------------------------------------------------------------+
 
-
 import os
 import json
 from tqdm import tqdm
-from student.utils.error import exit_error, IndexError
-from student.cli_functions.index.chunk import make_chunk_md, make_chunk_py
-from student.cli_functions.index.chunk import convert_lst_chunk_to_dict
+from ...utils.error import exit_error, IndexError
+from ..index.chunk import make_chunk_md, make_chunk_py
+from ..index.chunk import convert_lst_chunk_to_dict
+
+# +-------------------------------------------------------------------------+
+# |                              Importation                                |
+# +-------------------------------------------------------------------------+
+
+
+DATA_PATH = "../data"
 
 
 # +-------------------------------------------------------------------------+
@@ -32,7 +38,7 @@ from student.cli_functions.index.chunk import convert_lst_chunk_to_dict
 
 def cli_index(max_chunk_size: int):
 
-    directory = "data/raw/vllm-0.10.1/"
+    directory = f"{DATA_PATH}/vllm-0.10.1/"
     lst_chunk = []
     dict_chunk = {}
     nb_doc = get_nb_doc(directory)
@@ -57,7 +63,7 @@ def cli_index(max_chunk_size: int):
                     elif (path.endswith(".py")):
                         dict_chunk = make_chunk_py(content, max_chunk_size)
 
-                    out_dir = "data/processed/chunks"
+                    out_dir = f"{DATA_PATH}/processed/chunks"
                     out_name = file + ".json"
 
                     os.makedirs(out_dir, exist_ok=True)
@@ -68,7 +74,7 @@ def cli_index(max_chunk_size: int):
 
                     progress_bar.update(1)
 
-        out_dir = "data/processed/bm25_index"
+        out_dir = f"{DATA_PATH}/processed/bm25_index"
         os.makedirs(out_dir, exist_ok=True)
 
     except Exception as e:

@@ -6,33 +6,35 @@
 #         |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/       #
 #                                                                            #
 # ************************************************************************** #
-# @name   : minimalSearchResults.py                                          #
+# @name   : search.py                                                        #
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
-# @creation : 2026/05/11 16:41:11 by alebaron                                #
-# @update   : 2026/05/15 10:55:57 by alebaron                                #
+# @creation : 2026/05/15 11:16:02 by alebaron                                #
+# @update   : 2026/05/15 12:48:49 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
-# |                               Importation                               |
+# |                              Importation                                |
 # +-------------------------------------------------------------------------+
 
 
-from typing import List
-from pydantic import BaseModel
-from student.models.minimalSource import MinimalSource
+import os
+from ...cli_functions.index.index import cli_index
 
 
 # +-------------------------------------------------------------------------+
-# |                                 Classe                                  |
+# |                                Methods                                  |
 # +-------------------------------------------------------------------------+
 
-class MinimalSearchResults(BaseModel):
+def cli_search(question: str, k: int):
 
-    # +---------------------------------------------------------------------+
-    # |                            Attributs                                |
-    # +---------------------------------------------------------------------+
+    # On chunk les documents si ça n'a pas déjà été fait
 
-    question_id: str
-    question: str
-    retrieved_sources: List[MinimalSource]
+    index_path = "data/processed/chunks"
+
+    if (os.path.exists(index_path) is False):
+        cli_index(2000)
+
+    # Et ensuite on cherche les documents pertinents
+
+    

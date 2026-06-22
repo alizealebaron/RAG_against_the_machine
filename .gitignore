@@ -225,3 +225,7 @@ vllm-0.10.1
 test*
 debug*
 data/processed
+moulinette
+exams
+moulinette.zip
+moulinette-ubuntu

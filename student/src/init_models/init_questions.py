@@ -20,9 +20,9 @@
 
 from typing import List
 from json import JSONDecodeError, load
-from student.models.answeredQuestion import AnsweredQuestion
-from student.models.unansweredQuestion import UnansweredQuestion
-from student.utils.error import exit_error, FileError
+from ..models.answeredQuestion import AnsweredQuestion
+from ..models.unansweredQuestion import UnansweredQuestion
+from ..utils.error import exit_error, FileError
 
 
 # +-------------------------------------------------------------------------+
