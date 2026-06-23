@@ -19,7 +19,7 @@
 
 NAME = RAG_against_the_machine
 MYPY_FLAGS    = --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs --follow-imports=skip
-SRC_UV        = student.src
+SRC_UV        = src
 SRC           = student/src/
 UV_INSTALL    = curl -LsSf https://astral.sh/uv/install.sh | sh
 UV_VERSION    = uv --version
@@ -61,7 +61,7 @@ install:
 
 # Run the main file of call_me_maybe
 run :
-	@uv run python -m $(SRC_UV) index 2000
+	@cd student && uv run python -m $(SRC_UV) index 2000
 
 # Run the main file of call_me_maybe in debug mode
 debug:

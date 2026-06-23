@@ -19,7 +19,7 @@
 
 
 import os
-from ...cli_functions.index.index import cli_index
+from ...utils.error import IndexError
 
 
 # +-------------------------------------------------------------------------+
@@ -30,10 +30,10 @@ def cli_search(question: str, k: int):
 
     # On chunk les documents si ça n'a pas déjà été fait
 
-    index_path = "data/processed/chunks"
+    index_path = "../data/processed/chunks"
 
     if (os.path.exists(index_path) is False):
-        cli_index(2000)
+        raise IndexError("Error: You must do indexing before searching.")
 
     # Et ensuite on cherche les documents pertinents
 
