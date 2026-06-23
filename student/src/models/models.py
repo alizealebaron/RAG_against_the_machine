@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/06/23 14:18:48 by alebaron                                #
-# @update   : 2026/06/23 16:05:21 by alebaron                                #
+# @update   : 2026/06/23 17:44:46 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -97,3 +97,14 @@ class AnsweredQuestion(UnansweredQuestion):
     answer: str
     difficulty: str
     is_valid: bool
+
+
+class Chunk(MinimalSource):
+
+    # +---------------------------------------------------------------------+
+    # |                            Attributs                                |
+    # +---------------------------------------------------------------------+
+
+    id: str
+    texte: str
+    fichier: str
