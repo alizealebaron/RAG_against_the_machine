@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/06/23 14:18:48 by alebaron                                #
-# @update   : 2026/06/23 17:44:46 by alebaron                                #
+# @update   : 2026/06/25 10:00:08 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -105,6 +105,6 @@ class Chunk(MinimalSource):
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
 
-    id: str
-    texte: str
+    id: int
+    text: str
     fichier: str

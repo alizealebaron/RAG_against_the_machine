@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/05/15 12:03:06 by alebaron                                #
+# @update   : 2026/06/25 18:48:58 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -22,7 +22,7 @@ import json
 from tqdm import tqdm
 from ...utils.error import exit_error, IndexError
 from ..index.chunk import make_chunk_md, make_chunk_py
-from ..index.chunk import convert_lst_chunk_to_dict
+from ..index.chunk import convert_lst_chunk_for_json
 
 # +-------------------------------------------------------------------------+
 # |                              Importation                                |
@@ -38,10 +38,11 @@ DATA_PATH = "../data"
 
 def cli_index(max_chunk_size: int):
 
-    directory = f"{DATA_PATH}/vllm-0.10.1/"
+    # directory = f"{DATA_PATH}/vllm-0.10.1/"
+    directory = f"{DATA_PATH}/test_datasets"
     lst_chunk = []
-    dict_chunk = {}
     nb_doc = get_nb_doc(directory)
+    lst_id = 0
 
     try:
         max_chunk_size = int(max_chunk_size)
@@ -49,6 +50,8 @@ def cli_index(max_chunk_size: int):
 
         for root, dirs, files in os.walk(directory):
             for file in files:
+
+                tmp_path = (root + "/" + file)[3::]
 
                 if (file.endswith(".md") or file.endswith(".py")):
 
@@ -58,21 +61,26 @@ def cli_index(max_chunk_size: int):
                         content = f.read()
 
                     if (path.endswith(".md")):
-                        lst_chunk = make_chunk_md(content, max_chunk_size)
-                        dict_chunk = convert_lst_chunk_to_dict(lst_chunk)
+                        tmp_lst = make_chunk_md(content, max_chunk_size,
+                                                lst_id, tmp_path)
+                        lst_chunk.append(convert_lst_chunk_for_json(tmp_lst))
                     elif (path.endswith(".py")):
-                        dict_chunk = make_chunk_py(content, max_chunk_size)
+                        tmp_lst = make_chunk_py(content, max_chunk_size,
+                                                lst_id, tmp_path)
+                        lst_chunk.append(convert_lst_chunk_for_json(tmp_lst))
 
-                    out_dir = f"{DATA_PATH}/processed/chunks"
-                    out_name = file + ".json"
-
-                    os.makedirs(out_dir, exist_ok=True)
-
-                    output_file = os.path.join(out_dir, out_name)
-                    with open(output_file, "w") as f:
-                        json.dump(dict_chunk, f, indent=2)
+                    lst_id = (lst_chunk[-1][-1]['id'] + 1)
 
                     progress_bar.update(1)
+
+        out_dir = f"{DATA_PATH}/processed/chunks/"
+        out_name = "chunk.json"
+
+        os.makedirs(out_dir, exist_ok=True)
+
+        output_file = os.path.join(out_dir, out_name)
+        with open(output_file, "w") as f:
+            json.dump(lst_chunk, f, indent=2)
 
         out_dir = f"{DATA_PATH}/processed/bm25_index"
         os.makedirs(out_dir, exist_ok=True)

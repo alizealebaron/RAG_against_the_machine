@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/05/15 12:03:46 by alebaron                                #
+# @update   : 2026/06/25 09:57:56 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,16 +18,16 @@
 # +-------------------------------------------------------------------------+
 
 
-try:
-    import sys
-    import fire
-    from .cli_functions.index.index import cli_index
-    from .cli_functions.search.search import cli_search
-    from .cli_functions.answer.answer import cli_answer
-except Exception:
-    print("ImportationError: Some package are not present. Please do "
-          "`uv sync` to install a python env.")
-    sys.exit(2)
+# try:
+import sys
+import fire
+from .cli_functions.index.index import cli_index
+from .cli_functions.search.search import cli_search
+from .cli_functions.answer.answer import cli_answer
+# except Exception:
+#     print("ImportationError: Some package are not present. Please do "
+#           "`uv sync` to install a python env.")
+#     sys.exit(2)
 
 
 # +-------------------------------------------------------------------------+
