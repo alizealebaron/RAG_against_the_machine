@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/15 11:16:02 by alebaron                                #
-# @update   : 2026/05/15 12:48:49 by alebaron                                #
+# @update   : 2026/06/26 10:38:32 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -30,7 +30,7 @@ def cli_search(question: str, k: int):
 
     # On chunk les documents si ça n'a pas déjà été fait
 
-    index_path = "../data/processed/chunks"
+    index_path = "../data/processed/chunks/chunk.json"
 
     if (os.path.exists(index_path) is False):
         raise IndexError("Error: You must do indexing before searching.")
