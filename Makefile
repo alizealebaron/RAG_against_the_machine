@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/26 12:46:41 by alebaron                                #
-# @update   : 2026/05/15 10:50:51 by alebaron                                #
+# @update   : 2026/06/26 14:25:23 by alebaron                                #
 # ************************************************************************** #
 
 # ==========================
@@ -61,7 +61,7 @@ install:
 
 # Run the main file of call_me_maybe
 run :
-	@cd student && uv run python -m $(SRC_UV) index 2000
+	@cd student && uv run python -m $(SRC_UV) search "What activation does EmbeddingPoolerHead use by default ?" 5
 
 # Run the main file of call_me_maybe in debug mode
 debug:

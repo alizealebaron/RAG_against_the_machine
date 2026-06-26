@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/06/25 09:57:56 by alebaron                                #
+# @update   : 2026/06/26 14:41:36 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -24,6 +24,7 @@ import fire
 from .cli_functions.index.index import cli_index
 from .cli_functions.search.search import cli_search
 from .cli_functions.answer.answer import cli_answer
+from .utils.error import SearchError, exit_error
 # except Exception:
 #     print("ImportationError: Some package are not present. Please do "
 #           "`uv sync` to install a python env.")
@@ -40,7 +41,11 @@ def index(max_chunk_size: int):
 
 
 def search(question: str, k=10):
-    cli_search(question, k)
+
+    try:
+        cli_search(question, k)
+    except Exception as e:
+        exit_error(SearchError(), e)
 
 
 def search_dataset():

@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/06/23 14:18:48 by alebaron                                #
-# @update   : 2026/06/25 10:00:08 by alebaron                                #
+# @update   : 2026/06/26 10:43:09 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -97,6 +97,15 @@ class AnsweredQuestion(UnansweredQuestion):
     answer: str
     difficulty: str
     is_valid: bool
+
+
+class RagDataset(BaseModel):
+
+    # +---------------------------------------------------------------------+
+    # |                            Attributs                                |
+    # +---------------------------------------------------------------------+
+
+    rag_questions: List[AnsweredQuestion | UnansweredQuestion]
 
 
 class Chunk(MinimalSource):

@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/06/26 10:39:50 by alebaron                                #
+# @update   : 2026/06/26 13:22:10 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -45,6 +45,7 @@ def cli_index(max_chunk_size: int):
     lst_id = 0
 
     try:
+
         max_chunk_size = int(max_chunk_size)
         progress_bar = tqdm(total=nb_doc, desc="Chunking vllm files")
 
@@ -63,13 +64,13 @@ def cli_index(max_chunk_size: int):
                     if (path.endswith(".md")):
                         tmp_lst = make_chunk_md(content, max_chunk_size,
                                                 lst_id, tmp_path)
-                        lst_chunk.append(convert_lst_chunk_for_json(tmp_lst))
+                        lst_chunk.extend(convert_lst_chunk_for_json(tmp_lst))
                     elif (path.endswith(".py")):
                         tmp_lst = make_chunk_py(content, max_chunk_size,
                                                 lst_id, tmp_path)
-                        lst_chunk.append(convert_lst_chunk_for_json(tmp_lst))
+                        lst_chunk.extend(convert_lst_chunk_for_json(tmp_lst))
 
-                    lst_id = (lst_chunk[-1][-1]['id'] + 1)
+                    lst_id = (lst_chunk[-1]['id'] + 1)
 
                     progress_bar.update(1)
 
