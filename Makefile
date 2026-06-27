@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/26 12:46:41 by alebaron                                #
-# @update   : 2026/06/27 12:50:16 by alebaron                                #
+# @update   : 2026/06/27 13:13:39 by alebaron                                #
 # ************************************************************************** #
 
 # ============================================================================
@@ -113,7 +113,7 @@ help :
 	@echo "  $(GREEN)make lint$(RESET)               $(ITALIC)# Checking Flake8 + mypy norm$(RESET)"
 	@echo "  $(GREEN)make clean$(RESET)              $(ITALIC)# Clears Python caches$(RESET)"
 	@echo "  $(GREEN)make clean_index$(RESET)        $(ITALIC)# Deletes the BM25 index and chunk$(RESET)"
-# 	@echo "  $(GREEN)make clean_output$(RESET)       $(ITALIC)# Deletes the output files$(RESET)"
+	@echo "  $(GREEN)make clean_output$(RESET)       $(ITALIC)# Deletes the output files$(RESET)"
 	@echo "  $(GREEN)make fclean$(RESET)             $(ITALIC)# Clean everything$(RESET)"
 	@echo ""
 
@@ -125,7 +125,11 @@ clean_index :
 	@echo "$(RED)$(BOLD)[Cleaning index objects of ${NAME}]$(RESET)"
 	@rm -rf data/processed
 
-fclean : clean clean_index
+clean_output :
+	@echo "$(RED)$(BOLD)[Cleaning output objects of ${NAME}]$(RESET)"
+	@rm -rf data/output
+
+fclean : clean clean_index clean_output
 
 #              MAKE
 # =============================
