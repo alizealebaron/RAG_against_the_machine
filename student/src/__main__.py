@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/06/26 14:41:36 by alebaron                                #
+# @update   : 2026/06/27 12:13:02 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -22,7 +22,7 @@
 import sys
 import fire
 from .cli_functions.index.index import cli_index
-from .cli_functions.search.search import cli_search
+from .cli_functions.search.search import Search
 from .cli_functions.answer.answer import cli_answer
 from .utils.error import SearchError, exit_error
 # except Exception:
@@ -35,21 +35,38 @@ from .utils.error import SearchError, exit_error
 # |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
 
-def index(max_chunk_size: int):
+def index(max_chunk_size=2000):
+
     cli_index(max_chunk_size)
     print("Ingestion complete! Indices saved under data/processed/")
 
 
 def search(question: str, k=10):
 
+    print(" Begin of search ".center(70, "~"))
+
     try:
-        cli_search(question, k)
+        search = Search(question=question, k=k)
+        search.search_one()
     except Exception as e:
         exit_error(SearchError(), e)
 
+    print(" Search completed ! ".center(70, "~") + "\n")
 
-def search_dataset():
-    print("Vous avez sélectionné l'option \"search_dataset\" !")
+
+def search_dataset(dataset_path: str, save_directory: str, k=10) -> None:
+
+    print(" Begin of search ".center(70, "~"))
+
+    try:
+        search = Search(k=k, dataset_path=dataset_path,
+                        save_path=save_directory)
+        search.search_dataset()
+
+    except Exception as e:
+        exit_error(SearchError(), e)
+
+    print(" Search completed ! ".center(70, "~") + "\n")
 
 
 def answer(question: str, k=10):

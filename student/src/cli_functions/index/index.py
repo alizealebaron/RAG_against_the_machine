@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/06/26 13:22:10 by alebaron                                #
+# @update   : 2026/06/27 11:57:23 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -19,6 +19,7 @@
 
 import os
 import json
+import bm25s
 from tqdm import tqdm
 from ...utils.error import exit_error, IndexError
 from ..index.chunk import make_chunk_md, make_chunk_py
@@ -30,6 +31,7 @@ from ..index.chunk import convert_lst_chunk_for_json
 
 
 DATA_PATH = "../data"
+BM25_PATH = f"{DATA_PATH}/processed/bm25_index"
 
 
 # +-------------------------------------------------------------------------+
@@ -74,17 +76,23 @@ def cli_index(max_chunk_size: int):
 
                     progress_bar.update(1)
 
+        # Sauvegarde de l'indexage des documents
+
+        corpus_texts = [chunk["text"] for chunk in lst_chunk]
+        corpus_tokens = bm25s.tokenize(corpus_texts)
+        retriever = bm25s.BM25(corpus=corpus_texts, method="bm25+")
+        retriever.index(corpus_tokens)
+        retriever.save(BM25_PATH)
+
+        # Sauvegarde des chunks dans un fichier
+
         out_dir = f"{DATA_PATH}/processed/chunks/"
         out_name = "chunk.json"
-
         os.makedirs(out_dir, exist_ok=True)
 
         output_file = os.path.join(out_dir, out_name)
         with open(output_file, "w") as f:
             json.dump(lst_chunk, f, indent=2)
-
-        out_dir = f"{DATA_PATH}/processed/bm25_index"
-        os.makedirs(out_dir, exist_ok=True)
 
     except Exception as e:
         exit_error(IndexError(), e)
