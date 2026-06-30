@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/15 11:16:02 by alebaron                                #
-# @update   : 2026/06/27 13:09:23 by alebaron                                #
+# @update   : 2026/06/30 14:44:05 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -20,7 +20,7 @@
 import os
 import json
 import bm25s
-from ...utils.error import IndexError
+from ...utils.error import IndexError, SearchError, print_error
 from ...models.models import Chunk, StudentSearchResults, MinimalSearchResults
 from ...models.models import RagDataset
 
@@ -62,23 +62,26 @@ class Search():
         this.__dataset_path = dataset_path
         this.__save_path = save_path
 
-        if (this.__is_path_init(this.__dataset_path) is False and
-           this.__dataset_path is not None):
+        if (this.__dataset_path is not None):
+            if (this.__is_path_init(this.__dataset_path) is False):
+                raise Exception(f"Cannot found {this.__dataset_path}.")
 
-            raise Exception(f"Cannot found {this.__dataset_path}.")
+        if (int(this.__k) < 1):
+            print_error(SearchError(), f"k value can't be negativ ({k}) "
+                        "default value will be used (5).")
+            this.__k = 5
 
     # +---------------------------------------------------------------------+
     # |                           Search Methods                            |
     # +---------------------------------------------------------------------+
 
-    def search_one(this) -> None:
+    def search_single(this) -> StudentSearchResults:
 
         search = this.__get_min_search_result("single_query", this.__question)
         search_result = StudentSearchResults(search_results=[], k=this.__k)
         search_result.search_results.append(search)
 
-        res = search_result.model_dump_json(indent=2)
-        print(res)
+        return search_result
 
     def search_dataset(this) -> None:
 
@@ -116,7 +119,7 @@ class Search():
                                 question: str) -> MinimalSearchResults:
 
         min_search_res = MinimalSearchResults(question_id=id,
-                                              question=question,
+                                              question_str=question,
                                               retrieved_sources=[])
 
         query_tokens = bm25s.tokenize(question)

@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/26 12:46:41 by alebaron                                #
-# @update   : 2026/06/27 13:13:39 by alebaron                                #
+# @update   : 2026/06/30 15:16:18 by alebaron                                #
 # ************************************************************************** #
 
 # ============================================================================
@@ -140,11 +140,17 @@ index : install
 
 search : install
 	@echo "$(YELLOW)Waiting for search...$(RESET)"
-	@cd student && uv run python -m $(SRC_UV) search "What hardware platforms does vLLM support?" 4
+	@cd student && uv run python -m $(SRC_UV) search "How to configure OpenAI server?" --k 10
 
 search_dataset : install
 	@echo "$(YELLOW)Waiting for search...$(RESET)"
 	@cd student && uv run python -m $(SRC_UV) search_dataset --dataset_path ../data/datasets/public/UnansweredQuestions/dataset_docs_public.json --k 10 --save_directory ../data/output/search_results
+
+answer : install
+	@cd student && uv run python -m $(SRC_UV) answer "How to configure OpenAI server?" --k 10
+
+answer_dataset : install
+	@cd student && uv run python -m $(SRC_UV) answer_dataset "How to configure OpenAI server?" --k 10
 
 # ============================================================================
 #                               Usefull things

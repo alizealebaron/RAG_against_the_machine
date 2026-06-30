@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/27 14:26:28 by alebaron                                #
-# @update   : 2026/06/26 14:39:26 by alebaron                                #
+# @update   : 2026/06/29 08:46:00 by alebaron                                #
 # ************************************************************************** #
 
 # +--------------------------------------------------------------------------+
@@ -40,10 +40,16 @@ class IndexError(Exception):
 
 class SearchError(Exception):
     """
-    Exception raised for errors in the index.
+    Exception raised for errors in the search.
     """
     pass
 
+
+class AnswerError(Exception):
+    """
+    Exception raised for errors in the answer.
+    """
+    pass
 
 # +--------------------------------------------------------------------------+
 # |                                 Function                                 |

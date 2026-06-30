@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/06/27 12:13:02 by alebaron                                #
+# @update   : 2026/06/30 14:43:12 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -21,10 +21,11 @@
 # try:
 import sys
 import fire
+import json
 from .cli_functions.index.index import cli_index
 from .cli_functions.search.search import Search
-from .cli_functions.answer.answer import cli_answer
-from .utils.error import SearchError, exit_error
+from .cli_functions.answer.answer import Answer
+from .utils.error import SearchError, exit_error, AnswerError
 # except Exception:
 #     print("ImportationError: Some package are not present. Please do "
 #           "`uv sync` to install a python env.")
@@ -47,7 +48,10 @@ def search(question: str, k=10):
 
     try:
         search = Search(question=question, k=k)
-        search.search_one()
+        result = search.search_single()
+        result = result.model_dump_json(indent=2)
+        print(result)
+
     except Exception as e:
         exit_error(SearchError(), e)
 
@@ -70,11 +74,23 @@ def search_dataset(dataset_path: str, save_directory: str, k=10) -> None:
 
 
 def answer(question: str, k=10):
-    cli_answer(question, k)
+
+    try:
+        ans = Answer(k, question=question)
+        ans.answer_single()
+    except Exception as e:
+        exit_error(SearchError(), e)
 
 
-def answer_dataset():
-    print("Vous avez sélectionné l'option \"answer_dataset\" !")
+def answer_dataset(student_search_results_path: str, save_directory: str, k=5):
+
+    try:
+
+        ans = Answer(k, search_path=student_search_results_path,
+                     save_directory=save_directory)
+
+    except Exception as e:
+        exit_error(SearchError(), e)
 
 
 def evaluate():
@@ -86,6 +102,7 @@ def evaluate():
 # +-------------------------------------------------------------------------+
 
 if __name__ == '__main__':
+
     try:
         fire.Fire()
     except Exception as e:

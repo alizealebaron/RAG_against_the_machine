@@ -37,6 +37,7 @@
 - [Guide d'utilisation de tdqm](https://www.datacamp.com/tutorial/tqdm-python)
 - [BM25s](https://bm25s.github.io/)
 - [Abstract Syntax TreePython](https://medium.com/@dev.aguillin/abstract-syntax-tree-python-85d39a53e86d)
+- [Transformers](https://pypi.org/project/transformers/)
 
 ### L'indexing
 
@@ -58,3 +59,9 @@
 - [What is BM25 (Best Matching 25) Algorithm](https://www.geeksforgeeks.org/nlp/what-is-bm25-best-matching-25-algorithm/)
 
 - [Building Production RAG with Anthropic’s Contextual Retrieval: Complete Python Implementation](https://medium.com/@reliabledataengineering/building-production-rag-with-anthropics-contextual-retrieval-complete-python-implementation-f8a436095860)
+
+### Answer
+
+- [RAG : comment ça marche techniquement ?](https://www.axopen.com/blog/2025/08/comment-fonctionne-un-rag/)
+- [How to build your own local IA ?](https://www.freecodecamp.org/news/build-a-local-ai)
+

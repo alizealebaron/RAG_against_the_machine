@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/06/23 14:18:48 by alebaron                                #
-# @update   : 2026/06/27 12:47:55 by alebaron                                #
+# @update   : 2026/06/30 10:28:41 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -55,7 +55,7 @@ class MinimalSearchResults(BaseModel):
     # +---------------------------------------------------------------------+
 
     question_id: str
-    question: str
+    question_str: str
     retrieved_sources: List[MinimalSource]
 
 
