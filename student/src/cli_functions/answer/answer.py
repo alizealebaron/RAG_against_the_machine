@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/15 10:54:32 by alebaron                                #
-# @update   : 2026/06/30 15:30:07 by alebaron                                #
+# @update   : 2026/07/01 16:37:07 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -21,7 +21,8 @@ import os
 import json
 import torch
 from transformers import pipeline
-from ...models.models import Chunk, StudentSearchResults
+from ...models.models import Chunk, StudentSearchResults, MinimalAnswer
+from ...models.models import StudentSearchResultsAndAnswer
 from ...utils.error import AnswerError, print_error
 from ..search.search import Search
 
@@ -83,43 +84,57 @@ class Answer():
 
         searchModel = Search(this.__k, this.__question)
         search_result = searchModel.search_single()
+        question = search_result.search_results[0]
 
         # Génération du prompt
-        start_prompt = this.__init_prompt(search_result)
+        start_prompt = this.__init_prompt_sys()
+        user_prompt = this.__init_prompt_usr(search_result)
 
         # Génération de la réponse
         chat = [
             {"role": "system", "content": start_prompt},
-            {"role": "user", "content": this.__question}
+            {"role": "user", "content": user_prompt}
         ]
 
-        response = this.__pipeline(chat, max_new_tokens=512)
+        response = this.__pipeline(chat, max_new_tokens=256)
         reponse = response[0]["generated_text"][-1]["content"]
-
-        print(reponse)
-
-        print("--------------------------------")
-
-        rep = reponse.split("</think>")
-        print(rep[1])
+        rep = reponse.split("</think>\n\n")
+        print(f"{rep[1]}")
 
         # Renvoie de la réponse
+        min_ans = MinimalAnswer(answer=rep[1],
+                                question_id=question.question_id,
+                                question_str=question.question_str,
+                                retrieved_sources=question.retrieved_sources)
+
+        answer = StudentSearchResultsAndAnswer(k=this.__k,
+                                               search_results=[min_ans])
+
+        return answer
 
     # +---------------------------------------------------------------------+
     # |                           Prompt Methods                            |
     # +---------------------------------------------------------------------+
 
-    def __init_prompt(this, search_result: StudentSearchResults) -> str:
+    def __init_prompt_sys(this) -> str:
 
-        start_prompt = ("You are a robot that must answer the questions "
-                        "asked of you in a simple way, using the information"
-                        " from the texts I will give you. I want really short "
-                        "answer.\n\n"
-                        "Here are the texts: \n")
+        start_prompt = ("You are a helpful assistant expert in LLM domain. "
+                        "Answer the question using the provided context. "
+                        "Be concise and precise. Answer: /no_think")
 
-        for chunk in search_result.search_results[0].retrieved_sources:
-            start_prompt += f"- {chunk.file_path}:\n"
-            start_prompt += f"{chunk.text}\n\n"
+        return start_prompt
+
+    def __init_prompt_usr(this, shrc_res: StudentSearchResults) -> str:
+
+        contexte = []
+
+        for chunk in shrc_res.search_results[0].retrieved_sources:
+
+            contexte.append(f"[Source: {chunk.file_path}]\n{chunk.text}")
+
+        contexte = "\n\n---\n\n".join(contexte)
+        start_prompt = (f"Contexte: {contexte}\n\n"
+                        f"Question : {this.__question}")
 
         return start_prompt
 

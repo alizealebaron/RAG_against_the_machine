@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/15 11:16:02 by alebaron                                #
-# @update   : 2026/06/30 14:44:05 by alebaron                                #
+# @update   : 2026/07/01 16:56:47 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -20,6 +20,7 @@
 import os
 import json
 import bm25s
+from tqdm import tqdm
 from ...utils.error import IndexError, SearchError, print_error
 from ...models.models import Chunk, StudentSearchResults, MinimalSearchResults
 from ...models.models import RagDataset
@@ -93,11 +94,24 @@ class Search():
         # Boucle sur toutes les réponses pour récupérer les données
         search_result = StudentSearchResults(search_results=[], k=this.__k)
 
-        for question in dataset.rag_questions:
+        nb_doc = len(dataset.rag_questions)
+        progress_bar = tqdm(total=nb_doc, desc="Searching data in chunk")
 
-            search = this.__get_min_search_result(question.question_id,
-                                                  question.question)
-            search_result.search_results.append(search)
+        try:
+
+            for question in dataset.rag_questions:
+
+                search = this.__get_min_search_result(question.question_id,
+                                                      question.question)
+                search_result.search_results.append(search)
+
+                progress_bar.update(1)
+
+        except Exception as e:
+            raise Exception(e)
+
+        finally:
+            progress_bar.close()
 
         # Enregistrement des résultats
         res = search_result.model_dump_json(indent=2)

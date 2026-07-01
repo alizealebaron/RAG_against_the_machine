@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/06/27 11:57:23 by alebaron                                #
+# @update   : 2026/07/01 16:45:59 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -96,6 +96,9 @@ def cli_index(max_chunk_size: int):
 
     except Exception as e:
         exit_error(IndexError(), e)
+
+    finally:
+        progress_bar.close()
 
 
 def get_nb_doc(path: str) -> int:

@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/06/23 14:18:48 by alebaron                                #
-# @update   : 2026/06/30 10:28:41 by alebaron                                #
+# @update   : 2026/07/01 13:24:49 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -85,6 +85,7 @@ class StudentSearchResultsAndAnswer(StudentSearchResults):
     # +---------------------------------------------------------------------+
 
     search_results: List[MinimalAnswer]
+    k: int
 
 
 class AnsweredQuestion(UnansweredQuestion):

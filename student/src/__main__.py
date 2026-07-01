@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/06/30 14:43:12 by alebaron                                #
+# @update   : 2026/07/01 16:52:42 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -62,13 +62,17 @@ def search_dataset(dataset_path: str, save_directory: str, k=10) -> None:
 
     print(" Begin of search ".center(70, "~"))
 
-    try:
-        search = Search(k=k, dataset_path=dataset_path,
-                        save_path=save_directory)
-        search.search_dataset()
+    # try:
+    #     search = Search(k=k, dataset_path=dataset_path,
+    #                     save_path=save_directory)
+    #     search.search_dataset()
 
-    except Exception as e:
-        exit_error(SearchError(), e)
+    # except Exception as e:
+    #     exit_error(SearchError(), e)
+
+    search = Search(k=k, dataset_path=dataset_path,
+                        save_path=save_directory)
+    search.search_dataset()
 
     print(" Search completed ! ".center(70, "~") + "\n")
 
@@ -76,8 +80,10 @@ def search_dataset(dataset_path: str, save_directory: str, k=10) -> None:
 def answer(question: str, k=10):
 
     try:
-        ans = Answer(k, question=question)
-        ans.answer_single()
+        answer = Answer(k, question=question)
+        result = answer.answer_single()
+        result = result.model_dump_json(indent=2)
+        print(result)
     except Exception as e:
         exit_error(SearchError(), e)
 
@@ -103,7 +109,8 @@ def evaluate():
 
 if __name__ == '__main__':
 
-    try:
-        fire.Fire()
-    except Exception as e:
-        print(e)
+    # try:
+    #     fire.Fire()
+    # except Exception as e:
+    #     print(e)
+    fire.Fire()
