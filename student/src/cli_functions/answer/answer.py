@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/15 10:54:32 by alebaron                                #
-# @update   : 2026/07/01 16:37:07 by alebaron                                #
+# @update   : 2026/07/01 17:04:13 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -78,7 +78,7 @@ class Answer():
     # |                           Answer Methods                            |
     # +---------------------------------------------------------------------+
 
-    def answer_single(this) -> None:
+    def answer_single(this) -> StudentSearchResultsAndAnswer:
 
         # Génération de la recherche pour une réponse unique
 
@@ -99,7 +99,6 @@ class Answer():
         response = this.__pipeline(chat, max_new_tokens=256)
         reponse = response[0]["generated_text"][-1]["content"]
         rep = reponse.split("</think>\n\n")
-        print(f"{rep[1]}")
 
         # Renvoie de la réponse
         min_ans = MinimalAnswer(answer=rep[1],
@@ -111,6 +110,18 @@ class Answer():
                                                search_results=[min_ans])
 
         return answer
+
+    def answer_dataset(this) -> StudentSearchResultsAndAnswer:
+
+        pass
+
+    # +---------------------------------------------------------------------+
+    # |                           Answer Methods                            |
+    # +---------------------------------------------------------------------+
+
+    def answer_one_question(this) -> MinimalAnswer:
+
+        pass
 
     # +---------------------------------------------------------------------+
     # |                           Prompt Methods                            |
