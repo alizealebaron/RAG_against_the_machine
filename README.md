@@ -38,6 +38,7 @@
 - [BM25s](https://bm25s.github.io/)
 - [Abstract Syntax TreePython](https://medium.com/@dev.aguillin/abstract-syntax-tree-python-85d39a53e86d)
 - [Transformers](https://pypi.org/project/transformers/)
+- [LangChain Text Splitters](https://reference.langchain.com/python/langchain-text-splitters)
 
 ### L'indexing
 

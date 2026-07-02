@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/07/01 16:45:59 by alebaron                                #
+# @update   : 2026/07/02 11:52:43 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -21,6 +21,8 @@ import os
 import json
 import bm25s
 from tqdm import tqdm
+from typing import List
+from ...models.models import Chunk
 from ...utils.error import exit_error, IndexError
 from ..index.chunk import make_chunk_md, make_chunk_py
 from ..index.chunk import convert_lst_chunk_for_json
@@ -76,6 +78,12 @@ def cli_index(max_chunk_size: int):
 
                     progress_bar.update(1)
 
+        # Coupe des textes trop gros en .md
+        for chunk in lst_chunk:
+            if (chunk['fichier'] == "md" and
+               len(chunk["text"]) > max_chunk_size):
+                chunk["text"] = chunk["text"][0:max_chunk_size]
+
         # Sauvegarde de l'indexage des documents
 
         corpus_texts = [chunk["text"] for chunk in lst_chunk]
@@ -94,6 +102,8 @@ def cli_index(max_chunk_size: int):
         with open(output_file, "w") as f:
             json.dump(lst_chunk, f, indent=2)
 
+        verify_chunk_size(max_chunk_size, lst_chunk)
+
     except Exception as e:
         exit_error(IndexError(), e)
 
@@ -111,3 +121,17 @@ def get_nb_doc(path: str) -> int:
                 nb_doc += 1
 
     return nb_doc
+
+
+def verify_chunk_size(max_chunk_size: int, lst_chunk: List[Chunk]):
+
+    i = 0
+    for chunk in lst_chunk:
+        if (len(chunk["text"]) > max_chunk_size):
+            # if (chunk['fichier'] == "md"):
+            #     print(len(chunk['text']))
+            print(f"{chunk['id']} ({chunk['fichier']}) too long ! "
+                  f"({len(chunk['text'])})")
+            i += 1
+
+    print(f"Nombre de fichier incorrect: {i}")

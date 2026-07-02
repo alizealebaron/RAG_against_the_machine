@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/07/01 16:52:42 by alebaron                                #
+# @update   : 2026/07/02 14:30:15 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -21,7 +21,6 @@
 # try:
 import sys
 import fire
-import json
 from .cli_functions.index.index import cli_index
 from .cli_functions.search.search import Search
 from .cli_functions.answer.answer import Answer
@@ -62,22 +61,21 @@ def search_dataset(dataset_path: str, save_directory: str, k=10) -> None:
 
     print(" Begin of search ".center(70, "~"))
 
-    # try:
-    #     search = Search(k=k, dataset_path=dataset_path,
-    #                     save_path=save_directory)
-    #     search.search_dataset()
-
-    # except Exception as e:
-    #     exit_error(SearchError(), e)
-
-    search = Search(k=k, dataset_path=dataset_path,
+    try:
+        search = Search(k=k, dataset_path=dataset_path,
                         save_path=save_directory)
-    search.search_dataset()
+        search.search_dataset()
 
-    print(" Search completed ! ".center(70, "~") + "\n")
+    except Exception as e:
+        exit_error(SearchError(), e)
+
+    finally:
+        print(" Search completed ! ".center(70, "~") + "\n")
 
 
 def answer(question: str, k=10):
+
+    print(" Begin of answer ".center(70, "~"))
 
     try:
         answer = Answer(k, question=question)
@@ -85,22 +83,42 @@ def answer(question: str, k=10):
         result = result.model_dump_json(indent=2)
         print(result)
     except Exception as e:
-        exit_error(SearchError(), e)
+        exit_error(AnswerError(), e)
+    finally:
+        print(" Answer completed ! ".center(70, "~") + "\n")
 
 
-def answer_dataset(student_search_results_path: str, save_directory: str, k=5):
+def answer_dataset(student_search_results_path: str,
+                   save_directory: str, k=10):
+
+    print(" Begin of answer ".center(70, "~"))
 
     try:
 
         ans = Answer(k, search_path=student_search_results_path,
-                     save_directory=save_directory)
+                     save_path=save_directory)
+        ans.answer_dataset()
 
     except Exception as e:
-        exit_error(SearchError(), e)
+        exit_error(AnswerError(), e)
+
+    finally:
+        print(" Answer completed ! ".center(70, "~") + "\n")
 
 
-def evaluate():
-    print("Vous avez sélectionné l'option \"evaluate\" !")
+def evaluate(student_answer_path: str, dataset_path: str,
+             k=10, max_context_length=2000):
+
+    print(" Begin of evaluation ".center(70, "~"))
+
+    try:
+        pass
+
+    except Exception as e:
+        exit_error(AnswerError(), e)
+
+    finally:
+        print(" Evaluation completed ! ".center(70, "~") + "\n")
 
 
 # +-------------------------------------------------------------------------+
@@ -109,8 +127,8 @@ def evaluate():
 
 if __name__ == '__main__':
 
-    # try:
-    #     fire.Fire()
-    # except Exception as e:
-    #     print(e)
-    fire.Fire()
+    try:
+        fire.Fire()
+    except Exception as e:
+        print(e)
+    # fire.Fire()

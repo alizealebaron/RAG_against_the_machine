@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/06/23 14:18:48 by alebaron                                #
-# @update   : 2026/07/01 13:24:49 by alebaron                                #
+# @update   : 2026/07/02 09:25:34 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -48,6 +48,17 @@ class MinimalSource(BaseModel):
     last_character_index: int
 
 
+class Chunk(MinimalSource):
+
+    # +---------------------------------------------------------------------+
+    # |                            Attributs                                |
+    # +---------------------------------------------------------------------+
+
+    id: int
+    text: str
+    fichier: str
+
+
 class MinimalSearchResults(BaseModel):
 
     # +---------------------------------------------------------------------+
@@ -56,7 +67,7 @@ class MinimalSearchResults(BaseModel):
 
     question_id: str
     question_str: str
-    retrieved_sources: List[MinimalSource]
+    retrieved_sources: List[Chunk]
 
 
 class StudentSearchResults(BaseModel):
@@ -94,7 +105,7 @@ class AnsweredQuestion(UnansweredQuestion):
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
 
-    sources: List[MinimalSource]
+    sources: List[Chunk]
     answer: str
     difficulty: str
     is_valid: bool
@@ -107,14 +118,3 @@ class RagDataset(BaseModel):
     # +---------------------------------------------------------------------+
 
     rag_questions: List[AnsweredQuestion | UnansweredQuestion]
-
-
-class Chunk(MinimalSource):
-
-    # +---------------------------------------------------------------------+
-    # |                            Attributs                                |
-    # +---------------------------------------------------------------------+
-
-    id: int
-    text: str
-    fichier: str

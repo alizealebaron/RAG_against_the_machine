@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/12 15:21:04 by alebaron                                #
-# @update   : 2026/06/25 18:48:42 by alebaron                                #
+# @update   : 2026/07/02 11:51:07 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -21,6 +21,7 @@
 import re
 from typing import Any
 from astchunk import ASTChunkBuilder
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from ...models.models import Chunk
 
 
@@ -105,16 +106,35 @@ def make_chunk_py(text: str, chunk_max_size: int,
     chunk_builder = ASTChunkBuilder(**configs)
     chunks = chunk_builder.chunkify(text)
 
-    for i, chunk in enumerate(chunks):
+    fallback_splitter = RecursiveCharacterTextSplitter.from_language(
+        language="python",
+        chunk_size=chunk_max_size,
+        chunk_overlap=200
+    )
 
-        tmp_chunk = create_chunk(last_id, chunk['content'],
-                                 "py", file_path,
-                                 last_index,
-                                 last_index + len(chunk['content']) - 1)
-        lst_chunk.append(tmp_chunk)
+    for chunk in chunks:
+        content = chunk['content']
 
-        last_id += 1
-        last_index += len(chunk['content']) + 1
+        # Si le chunk respecte la taille, on l'ajoute normalement
+        if len(content) <= chunk_max_size:
+            sub_contents = [content]
+        else:
+            # Sinon, on force le sous-découpage du gros bloc
+            sub_contents = fallback_splitter.split_text(content)
+
+        for sub_content in sub_contents:
+            tmp_chunk = create_chunk(
+                last_id,
+                sub_content,
+                "py",
+                file_path,
+                last_index,
+                last_index + len(sub_content) - 1
+            )
+            lst_chunk.append(tmp_chunk)
+
+            last_id += 1
+            last_index += len(sub_content) + 1
 
     return lst_chunk
 

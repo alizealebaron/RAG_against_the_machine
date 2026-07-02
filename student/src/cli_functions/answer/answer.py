@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/15 10:54:32 by alebaron                                #
-# @update   : 2026/07/01 17:04:13 by alebaron                                #
+# @update   : 2026/07/02 11:56:06 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -20,9 +20,11 @@
 import os
 import json
 import torch
+from tqdm import tqdm
 from transformers import pipeline
-from ...models.models import Chunk, StudentSearchResults, MinimalAnswer
+from ...models.models import StudentSearchResults, MinimalAnswer
 from ...models.models import StudentSearchResultsAndAnswer
+from ...models.models import MinimalSearchResults
 from ...utils.error import AnswerError, print_error
 from ..search.search import Search
 
@@ -47,16 +49,11 @@ class Answer():
     def __init__(this, k: int, question=None, search_path=None,
                  save_path=None):
 
-        # Récupération des données
-        with open(INDEX_PATH, "r") as file:
-            data = json.load(file)
-
         # Initialisation des attributs
         this.__k = k
         this.__question = question
         this.__search_path = search_path
         this.__save_path = save_path
-        this.__lst_chunk = [Chunk(**arg) for arg in data]
 
         # Vérification des prédispositions pour l'answer
         if (this.__is_path_init(this.__search_path) is False):
@@ -68,11 +65,10 @@ class Answer():
             this.__k = 5
 
         # Initialisation du prompt inital
-
         this.__pipeline = pipeline(task="text-generation",
                                    model="Qwen/Qwen3-0.6B",
                                    dtype=torch.bfloat16,
-                                   device=-1)
+                                   device_map="auto")
 
     # +---------------------------------------------------------------------+
     # |                           Answer Methods                            |
@@ -86,9 +82,72 @@ class Answer():
         search_result = searchModel.search_single()
         question = search_result.search_results[0]
 
+        # Réponse à la question
+        min_ans = this.__answer_one_question(question)
+
+        # Mise sous la bonne forme de rendu
+        answer = StudentSearchResultsAndAnswer(k=this.__k,
+                                               search_results=[min_ans])
+
+        return answer
+
+    def answer_dataset(this) -> None:
+
+        # Récupération des résultats du search pour les datasets
+        with open(this.__search_path, "r") as file:
+            data = json.load(file)
+
+        dataset = StudentSearchResults(**data)
+
+        # Initialisation du format de réponse
+        answer = StudentSearchResultsAndAnswer(k=this.__k,
+                                               search_results=[])
+
+        # Initialisation de la barre de chargement
+        nb_doc = len(dataset.search_results)
+        progress_bar = tqdm(total=nb_doc, desc="Answering question")
+
+        # Boucle sur toutes les questions pour y répondre
+        try:
+
+            for question in dataset.search_results:
+
+                min_ans = this.__answer_one_question(question)
+                answer.search_results.append(min_ans)
+
+                progress_bar.update(1)
+
+        except Exception as e:
+            raise Exception(e)
+
+        finally:
+            progress_bar.close()
+
+        # Enregistrement des résultats
+        res = answer.model_dump_json(indent=2)
+
+        name = os.path.basename(this.__search_path)
+        output_file = os.path.join(this.__save_path, name)
+
+        os.makedirs(this.__save_path, exist_ok=True)
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write(res)
+
+        print(f"Saved student_search_results_and_answer to "
+              f"{this.__save_path}{name}")
+
+    # +---------------------------------------------------------------------+
+    # |                           Answer Methods                            |
+    # +---------------------------------------------------------------------+
+
+    def __answer_one_question(this,
+                              src_res: MinimalSearchResults) -> MinimalAnswer:
+
+        question = src_res
+
         # Génération du prompt
         start_prompt = this.__init_prompt_sys()
-        user_prompt = this.__init_prompt_usr(search_result)
+        user_prompt = this.__init_prompt_usr(question)
 
         # Génération de la réponse
         chat = [
@@ -96,7 +155,7 @@ class Answer():
             {"role": "user", "content": user_prompt}
         ]
 
-        response = this.__pipeline(chat, max_new_tokens=256)
+        response = this.__pipeline(chat, max_new_tokens=500)
         reponse = response[0]["generated_text"][-1]["content"]
         rep = reponse.split("</think>\n\n")
 
@@ -106,22 +165,7 @@ class Answer():
                                 question_str=question.question_str,
                                 retrieved_sources=question.retrieved_sources)
 
-        answer = StudentSearchResultsAndAnswer(k=this.__k,
-                                               search_results=[min_ans])
-
-        return answer
-
-    def answer_dataset(this) -> StudentSearchResultsAndAnswer:
-
-        pass
-
-    # +---------------------------------------------------------------------+
-    # |                           Answer Methods                            |
-    # +---------------------------------------------------------------------+
-
-    def answer_one_question(this) -> MinimalAnswer:
-
-        pass
+        return min_ans
 
     # +---------------------------------------------------------------------+
     # |                           Prompt Methods                            |
@@ -135,15 +179,17 @@ class Answer():
 
         return start_prompt
 
-    def __init_prompt_usr(this, shrc_res: StudentSearchResults) -> str:
+    def __init_prompt_usr(this, shrc_res: MinimalSearchResults) -> str:
 
         contexte = []
 
-        for chunk in shrc_res.search_results[0].retrieved_sources:
+        for chunk in shrc_res.retrieved_sources:
 
             contexte.append(f"[Source: {chunk.file_path}]\n{chunk.text}")
 
         contexte = "\n\n---\n\n".join(contexte)
+        contexte = contexte[:3000]
+        contexte = contexte + "(truncated)"
         start_prompt = (f"Contexte: {contexte}\n\n"
                         f"Question : {this.__question}")
 
