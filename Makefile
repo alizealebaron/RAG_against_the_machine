@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/26 12:46:41 by alebaron                                #
-# @update   : 2026/07/02 09:11:12 by alebaron                                #
+# @update   : 2026/07/02 14:59:54 by alebaron                                #
 # ************************************************************************** #
 
 # ============================================================================
@@ -151,6 +151,9 @@ answer : install
 
 answer_dataset : install
 	@cd student && uv run python -m $(SRC_UV) answer_dataset --student_search_results_path ../data/output/search_results/dataset_docs_public.json --save_directory ../data/output/search_results_and_answer
+
+evaluate : install
+	@cd student && uv run python -m $(SRC_UV) evaluate --student_answer_path ../data/output/search_results/dataset_docs_public.json --dataset_path ../data/datasets/AnsweredQuestions/dataset_docs_public.json --k 10 --max_context_length 2000
 
 # ============================================================================
 #                               Usefull things

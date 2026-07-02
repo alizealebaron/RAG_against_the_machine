@@ -66,3 +66,7 @@
 - [RAG : comment ça marche techniquement ?](https://www.axopen.com/blog/2025/08/comment-fonctionne-un-rag/)
 - [How to build your own local IA ?](https://www.freecodecamp.org/news/build-a-local-ai)
 
+### Autres RAG
+
+- [RAG de fcaval42](https://github.com/fcaval42/RAG_AgainstTheMachine)
+- [RAG de shadox254](https://github.com/shadox254/RAG-against-the-machine)

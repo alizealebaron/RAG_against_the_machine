@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/15 10:54:32 by alebaron                                #
-# @update   : 2026/07/02 11:56:06 by alebaron                                #
+# @update   : 2026/07/02 15:08:49 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -60,8 +60,8 @@ class Answer():
             raise AnswerError(f"Cannot find {search_path}. Do search before.")
 
         if (int(this.__k) < 1):
-            print_error(AnswerError(), f"k value can't be negativ ({k})."
-                        "default value will be used (5).")
+            print_error(Answer(), f"k value can't be < 1({k})."
+                                  "default value will be used (5).")
             this.__k = 5
 
         # Initialisation du prompt inital

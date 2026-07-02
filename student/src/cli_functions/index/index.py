@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/07/02 11:52:43 by alebaron                                #
+# @update   : 2026/07/02 15:10:21 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -23,7 +23,7 @@ import bm25s
 from tqdm import tqdm
 from typing import List
 from ...models.models import Chunk
-from ...utils.error import exit_error, IndexError
+from ...utils.error import exit_error, IndexError, print_error
 from ..index.chunk import make_chunk_md, make_chunk_py
 from ..index.chunk import convert_lst_chunk_for_json
 
@@ -41,6 +41,11 @@ BM25_PATH = f"{DATA_PATH}/processed/bm25_index"
 # +-------------------------------------------------------------------------+
 
 def cli_index(max_chunk_size: int):
+
+    if (max_chunk_size < 1):
+        print_error(IndexError(), "chunk_size value can't be < 1."
+                                  "default value will be used (2000).")
+        max_chunk_size = 2000
 
     directory = f"{DATA_PATH}/vllm-0.10.1/"
     # directory = f"{DATA_PATH}/test_datasets"

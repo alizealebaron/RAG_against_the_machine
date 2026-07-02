@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/07/02 14:30:15 by alebaron                                #
+# @update   : 2026/07/02 14:55:35 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -24,6 +24,7 @@ import fire
 from .cli_functions.index.index import cli_index
 from .cli_functions.search.search import Search
 from .cli_functions.answer.answer import Answer
+from .cli_functions.evaluate.evaluate import Evaluation
 from .utils.error import SearchError, exit_error, AnswerError
 # except Exception:
 #     print("ImportationError: Some package are not present. Please do "
@@ -112,7 +113,8 @@ def evaluate(student_answer_path: str, dataset_path: str,
     print(" Begin of evaluation ".center(70, "~"))
 
     try:
-        pass
+        eval = Evaluation(student_answer_path, dataset_path,
+                          k, max_context_length)
 
     except Exception as e:
         exit_error(AnswerError(), e)
