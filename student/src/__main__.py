@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/07/02 14:55:35 by alebaron                                #
+# @update   : 2026/07/04 11:28:10 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -25,7 +25,7 @@ from .cli_functions.index.index import cli_index
 from .cli_functions.search.search import Search
 from .cli_functions.answer.answer import Answer
 from .cli_functions.evaluate.evaluate import Evaluation
-from .utils.error import SearchError, exit_error, AnswerError
+from .utils.error import SearchError, exit_error, AnswerError, EvaluateError
 # except Exception:
 #     print("ImportationError: Some package are not present. Please do "
 #           "`uv sync` to install a python env.")
@@ -81,7 +81,7 @@ def answer(question: str, k=10):
     try:
         answer = Answer(k, question=question)
         result = answer.answer_single()
-        result = result.model_dump_json(indent=2)
+        result = result.search_results[0].answer
         print(result)
     except Exception as e:
         exit_error(AnswerError(), e)
@@ -115,9 +115,10 @@ def evaluate(student_answer_path: str, dataset_path: str,
     try:
         eval = Evaluation(student_answer_path, dataset_path,
                           k, max_context_length)
+        eval.evaluate()
 
     except Exception as e:
-        exit_error(AnswerError(), e)
+        exit_error(EvaluateError(), e)
 
     finally:
         print(" Evaluation completed ! ".center(70, "~") + "\n")

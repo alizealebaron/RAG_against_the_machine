@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/12 15:21:04 by alebaron                                #
-# @update   : 2026/07/02 11:51:07 by alebaron                                #
+# @update   : 2026/07/03 10:59:28 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -19,7 +19,6 @@
 
 
 import re
-from typing import Any
 from astchunk import ASTChunkBuilder
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from ...models.models import Chunk
@@ -70,7 +69,8 @@ def make_chunk_md(text: str, chunk_max_size: int,
                     last_index += len(chunk_text) + 1
 
                 # Nouveau chunk avec le header pour le contexte
-                current_chunk = [current_header, line] if current_header else [line]
+                current_chunk = ([current_header, line] if current_header
+                                 else [line])
                 current_length = len(current_header) + len(line)
             else:
                 current_chunk.append(line)

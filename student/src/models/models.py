@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/06/23 14:18:48 by alebaron                                #
-# @update   : 2026/07/02 09:25:34 by alebaron                                #
+# @update   : 2026/07/03 10:11:38 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -105,7 +105,7 @@ class AnsweredQuestion(UnansweredQuestion):
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
 
-    sources: List[Chunk]
+    sources: List[MinimalSource]
     answer: str
     difficulty: str
     is_valid: bool

@@ -66,6 +66,12 @@
 - [RAG : comment ça marche techniquement ?](https://www.axopen.com/blog/2025/08/comment-fonctionne-un-rag/)
 - [How to build your own local IA ?](https://www.freecodecamp.org/news/build-a-local-ai)
 
+### Evaluate
+
+- [RAG Recall vs Precision: A Practical Diagnostic Guide for Reliable Retrieval](https://dev.to/optyxstack/rag-recall-vs-precision-a-practical-diagnostic-guide-for-reliable-retrieval-26oh)
+- [RAG en production : sécurité, évaluation, observabilité](https://blog.stephane-robert.info/docs/developper/programmation/python/rag-production/)
+- [Retrieval Metrics Tutorial: Recall@k and MRR Explained](https://medium.com/@rajnish_khatri/retrieval-metrics-tutorial-recall-k-and-mrr-explained-d2f12afb9c89)
+
 ### Autres RAG
 
 - [RAG de fcaval42](https://github.com/fcaval42/RAG_AgainstTheMachine)
