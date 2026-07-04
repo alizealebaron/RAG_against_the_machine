@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/07/04 11:28:10 by alebaron                                #
+# @update   : 2026/07/04 16:00:19 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -21,11 +21,12 @@
 # try:
 import sys
 import fire
-from .cli_functions.index.index import cli_index
+from .cli_functions.index.index import Index
 from .cli_functions.search.search import Search
 from .cli_functions.answer.answer import Answer
 from .cli_functions.evaluate.evaluate import Evaluation
 from .utils.error import SearchError, exit_error, AnswerError, EvaluateError
+from .utils.error import IndexError
 # except Exception:
 #     print("ImportationError: Some package are not present. Please do "
 #           "`uv sync` to install a python env.")
@@ -38,8 +39,17 @@ from .utils.error import SearchError, exit_error, AnswerError, EvaluateError
 
 def index(max_chunk_size=2000):
 
-    cli_index(max_chunk_size)
-    print("Ingestion complete! Indices saved under data/processed/")
+    index = Index(max_chunk_size)
+    index.indexing()
+
+    # try:
+    #     index = Index(max_chunk_size)
+    #     index.indexing()
+
+    # except Exception as e:
+    #     exit_error(IndexError(), e)
+
+    # print("Ingestion complete! Indices saved under data/processed/")
 
 
 def search(question: str, k=10):
@@ -130,8 +140,8 @@ def evaluate(student_answer_path: str, dataset_path: str,
 
 if __name__ == '__main__':
 
-    try:
-        fire.Fire()
-    except Exception as e:
-        print(e)
-    # fire.Fire()
+    # try:
+    #     fire.Fire()
+    # except Exception as e:
+    #     print(e)
+    fire.Fire()

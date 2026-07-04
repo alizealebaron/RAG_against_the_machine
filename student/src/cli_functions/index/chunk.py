@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/12 15:21:04 by alebaron                                #
-# @update   : 2026/07/03 10:59:28 by alebaron                                #
+# @update   : 2026/07/04 15:52:54 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -88,71 +88,6 @@ def make_chunk_md(text: str, chunk_max_size: int,
             last_index += len(chunk_text) + 1
 
     return chunks
-
-
-def make_chunk_py(text: str, chunk_max_size: int,
-                  last_id: int, file_path: str) -> list[Chunk]:
-
-    lst_chunk = []
-    last_index = 0
-
-    # Initialize the chunk builder
-    configs = {
-        "max_chunk_size": chunk_max_size,
-        "language": "python",
-        "metadata_template": "default"
-    }
-
-    chunk_builder = ASTChunkBuilder(**configs)
-    chunks = chunk_builder.chunkify(text)
-
-    fallback_splitter = RecursiveCharacterTextSplitter.from_language(
-        language="python",
-        chunk_size=chunk_max_size,
-        chunk_overlap=200
-    )
-
-    for chunk in chunks:
-        content = chunk['content']
-
-        # Si le chunk respecte la taille, on l'ajoute normalement
-        if len(content) <= chunk_max_size:
-            sub_contents = [content]
-        else:
-            # Sinon, on force le sous-découpage du gros bloc
-            sub_contents = fallback_splitter.split_text(content)
-
-        for sub_content in sub_contents:
-            tmp_chunk = create_chunk(
-                last_id,
-                sub_content,
-                "py",
-                file_path,
-                last_index,
-                last_index + len(sub_content) - 1
-            )
-            lst_chunk.append(tmp_chunk)
-
-            last_id += 1
-            last_index += len(sub_content) + 1
-
-    return lst_chunk
-
-
-def create_chunk(id: int, text: str, fichier: str,
-                 file_path: str, first_i: int, last_i: int) -> Chunk:
-
-    dict_tmp = {
-        "id": id,
-        "text": text,
-        "fichier": fichier,
-        "file_path": file_path,
-        "first_character_index": first_i,
-        "last_character_index": last_i
-    }
-
-    return (Chunk(**dict_tmp))
-
 
 def convert_lst_chunk_for_json(lst_chunk: list[str]) -> list[dict]:
 
