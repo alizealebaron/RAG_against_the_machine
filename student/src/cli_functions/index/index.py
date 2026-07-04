@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/07/02 15:10:21 by alebaron                                #
+# @update   : 2026/07/04 14:28:33 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -47,7 +47,7 @@ def cli_index(max_chunk_size: int):
                                   "default value will be used (2000).")
         max_chunk_size = 2000
 
-    directory = f"{DATA_PATH}/vllm-0.10.1/"
+    directory = f"{DATA_PATH}/raw/vllm-0.10.1/"
     # directory = f"{DATA_PATH}/test_datasets"
     lst_chunk = []
     nb_doc = get_nb_doc(directory)
