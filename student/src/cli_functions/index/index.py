@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/07/04 17:45:12 by alebaron                                #
+# @update   : 2026/07/13 10:27:38 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -24,8 +24,7 @@ import bm25s
 from tqdm import tqdm
 from typing import List
 from ...models.models import Chunk
-from ...utils.error import exit_error, IndexError, print_error
-from ..index.chunk import convert_lst_chunk_for_json
+from ...utils.error import IndexError, print_error
 from astchunk import ASTChunkBuilder
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
@@ -53,7 +52,7 @@ class Index():
 
         this.__max_chunk_size = max_chunk_size
         this.__nb_doc = this.__get_nb_doc(VLLM_PATH)
-        this.__lst_chunk = []
+        this.__lst_chunk: List[Chunk] = []
         this.__last_id = 0
 
         if (int(max_chunk_size) < 1):
@@ -76,7 +75,7 @@ class Index():
             for file in files:
 
                 tmp_path = (root + "/" + file)[3::]
-                if (file.endswith(".md") or file.endswith(".py")):
+                if ((file.endswith(".md") or file.endswith(".py"))):
 
                     path = (os.path.join(root, file))
 
@@ -120,7 +119,92 @@ class Index():
 
     def __make_chunk_md(this, text: str, file_path: str) -> None:
 
-        
+        # Variable d'overlap en nombre de caractères
+        OVERLAP_SIZE = 150
+
+        # Initialisation des variables
+        header_pattern = r"^#{1,5}\s+.+$"
+        lines = text.splitlines(True)
+        current_chunk = []
+        current_header = ""
+        current_length = 0
+
+        # Initialisation des curseurs
+        chunk_start_curseur = 0
+        running_curseur = 0
+
+        # Boucle sur toutes les lignes
+        for line in lines:
+
+            line_len = len(line)
+            is_header = bool(re.match(header_pattern, line.strip()))
+
+            # On coupe un texte en cas de titre ou de ligne trop longue
+            if ((is_header or (current_length + line_len >
+                               this.__max_chunk_size)) and current_chunk):
+
+                chunk_text = ''.join(current_chunk).strip()
+
+                # Création du chunk
+                if chunk_text:
+                    this.__add_create_chunk(chunk_text, "md", file_path,
+                                            chunk_start_curseur,
+                                            running_curseur - 1)
+
+                # Calcul de l'overlap
+                overlap_prefix = ""
+                if OVERLAP_SIZE > 0:
+                    # On extrait les N derniers caractères du texte accumulé
+                    full_current_str = ''.join(current_chunk)
+                    overlap_prefix = full_current_str[-OVERLAP_SIZE:]
+
+                # Préparation du nouveau chunk avec l'overlap et le header
+                current_chunk = []
+                current_length = 0
+
+                # On réinjecte l'overlap du chunk précédent s'il existe
+                if overlap_prefix:
+                    current_chunk.append(overlap_prefix)
+                    current_length += len(overlap_prefix)
+
+                # On réinjecte le titre
+                if not is_header and current_header:
+                    header_line = current_header + "\n"
+                    current_chunk.append(header_line)
+                    current_length += len(header_line)
+
+                # On ajoute la ligne courante
+                current_chunk.append(line)
+                current_length += line_len
+
+                # Calcul de l'index de départ corrigé
+                chunk_start_curseur = max(0, (running_curseur -
+                                              len(overlap_prefix)))
+
+                if is_header:
+                    current_header = line.strip()
+
+            # Si la ligne est pas trop grande, on continue
+            else:
+                if is_header:
+                    current_header = line.strip()
+
+                if not current_chunk:
+                    chunk_start_curseur = running_curseur
+
+                current_chunk.append(line)
+                current_length += line_len
+
+            running_curseur += line_len
+
+        # Traitement du tout dernier chunk
+        if current_chunk:
+            chunk_text = ''.join(current_chunk).strip()
+            if chunk_text:
+                this.__add_create_chunk(chunk_text, "md",
+                                        file_path,
+                                        chunk_start_curseur,
+                                        running_curseur - 1)
 
     def __make_chunk_py(this, text: str, file_path: str) -> None:
 
@@ -207,8 +291,9 @@ class Index():
         i = 0
         for chunk in this.__lst_chunk:
             if (len(chunk.text) > this.__max_chunk_size):
-                print(f"{chunk['id']} ({chunk['fichier']}) too long ! "
-                      f"({len(chunk['text'])})")
+                print(f"{chunk.id} ({chunk.fichier}) too long ! "
+                      f"({len(chunk.text)})")
                 i += 1
 
-        print(f"Nombre de fichier incorrect: {i}")
+        if (i != 0):
+            print(f"Nombre de fichier incorrect: {i}")

@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/15 11:16:02 by alebaron                                #
-# @update   : 2026/07/01 16:56:47 by alebaron                                #
+# @update   : 2026/07/13 10:26:25 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -44,8 +44,9 @@ class Search():
     # |                                 Init                                |
     # +---------------------------------------------------------------------+
 
-    def __init__(this, k: int, question=None,
-                 dataset_path=None, save_path=None):
+    def __init__(this, k: int, question: str | None = None,
+                 dataset_path: str | None = None,
+                 save_path: str | None = None):
 
         # Erreur si jamais l'index n'est pas initialisé
         if (this.__is_path_init(INDEX_PATH) is False):
