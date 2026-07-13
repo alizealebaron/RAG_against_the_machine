@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/07/13 11:19:40 by alebaron                                #
+# @update   : 2026/07/13 15:50:58 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -24,7 +24,7 @@ import bm25s
 from tqdm import tqdm
 from typing import List
 from ...models.models import Chunk
-from ...utils.error import IndexError, print_error
+from ...utils.error import IndexError, print_error, exit_error
 from astchunk import ASTChunkBuilder
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
@@ -74,6 +74,10 @@ class Index():
             print_error(IndexError(), "chunk_size value can't be < 1."
                                       "default value will be used (2000).")
             max_chunk_size = 2000
+
+        if (not this.__is_path_init(VLLM_PATH)):
+            exit_error(IndexError(), f"Path {VLLM_PATH} doesn't exist. "
+                                     "Please check the path and try again.")
 
     # +---------------------------------------------------------------------+
     # |                           Indexing Methods                          |
@@ -317,3 +321,6 @@ class Index():
 
         if (i != 0):
             print(f"Nombre de fichier incorrect: {i}")
+
+    def __is_path_init(this, path: str) -> bool:
+        return os.path.exists(path)
