@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/27 14:26:28 by alebaron                                #
-# @update   : 2026/07/13 10:36:31 by alebaron                                #
+# @update   : 2026/07/13 11:10:26 by alebaron                                #
 # ************************************************************************** #
 
 # +--------------------------------------------------------------------------+
@@ -54,7 +54,7 @@ class AnswerError(Exception):
 
 class EvaluateError(Exception):
     """
-    Exception raised for errors in the answer.
+    Exception raised for errors in the evaluation.
     """
     pass
 

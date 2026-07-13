@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/15 11:16:02 by alebaron                                #
-# @update   : 2026/07/13 10:35:54 by alebaron                                #
+# @update   : 2026/07/13 11:20:13 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -40,6 +40,16 @@ BM25_PATH = "../data/processed/bm25_index"
 
 class Search():
 
+    """
+    Class representing the search functionality.
+
+    Methods:
+        search_single(): Searches for the most relevant chunks based on a
+            single question.
+        search_dataset(): Searches for the most relevant chunks based on a
+            dataset of questions.
+    """
+
     # +---------------------------------------------------------------------+
     # |                                 Init                                |
     # +---------------------------------------------------------------------+
@@ -47,6 +57,18 @@ class Search():
     def __init__(this, k: int, question: str | None = None,
                  dataset_path: str | None = None,
                  save_path: str | None = None) -> None:
+
+        """
+        Initializes the Search class.
+
+        Args:
+            k (int): The number of top search results to retrieve.
+            question (str | None): The question to search for. Default is None.
+            dataset_path (str | None): The path to the dataset of questions.
+                Default is None.
+            save_path (str | None): The path to save the search results.
+                Default is None.
+        """
 
         # Erreur si jamais l'index n'est pas initialisé
         if (this.__is_path_init(INDEX_PATH) is False):
@@ -79,6 +101,14 @@ class Search():
 
     def search_single(this) -> StudentSearchResults:
 
+        """
+        Searches for the most relevant chunks based on a single question.
+
+        Returns:
+            StudentSearchResults: The search results containing the question
+                and the retrieved chunks.
+        """
+
         search = this.__get_min_search_result("single_query", this.__question)
         search_result = StudentSearchResults(search_results=[], k=this.__k)
         search_result.search_results.append(search)
@@ -86,6 +116,11 @@ class Search():
         return search_result
 
     def search_dataset(this) -> None:
+
+        """
+        Searches for the most relevant chunks based on a dataset of questions
+        and saves the search results to the specified path.
+        """
 
         if this.__dataset_path is None:
             raise SearchError("Dataset path is missing.")

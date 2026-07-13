@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/06/23 14:18:48 by alebaron                                #
-# @update   : 2026/07/03 10:11:38 by alebaron                                #
+# @update   : 2026/07/13 11:13:26 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -29,6 +29,14 @@ from pydantic import BaseModel, Field
 
 class UnansweredQuestion(BaseModel):
 
+    """
+    Class representing an unanswered question.
+
+    Attributes:
+        question_id (str): A unique identifier for the question.
+        question (str): The text of the question.
+    """
+
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
@@ -38,6 +46,17 @@ class UnansweredQuestion(BaseModel):
 
 
 class MinimalSource(BaseModel):
+
+    """
+    Class representing a minimal source.
+
+    Attributes:
+        file_path (str): The path to the source file.
+        first_character_index (int): The index of the first character
+            in the source.
+        last_character_index (int): The index of the last character
+            in the source.
+    """
 
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
@@ -50,6 +69,15 @@ class MinimalSource(BaseModel):
 
 class Chunk(MinimalSource):
 
+    """
+    Class representing a chunk of text.
+
+    Attributes:
+        id (int): A unique identifier for the chunk.
+        text (str): The text of the chunk.
+        fichier (str): The name of the file from which the chunk was extracted.
+    """
+
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
@@ -60,6 +88,16 @@ class Chunk(MinimalSource):
 
 
 class MinimalSearchResults(BaseModel):
+
+    """
+    Class representing minimal search results.
+
+    Attributes:
+        question_id (str): A unique identifier for the question.
+        question_str (str): The text of the question.
+        retrieved_sources (List[Chunk]): A list of retrieved chunks
+            that are relevant to the question.
+    """
 
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
@@ -72,6 +110,15 @@ class MinimalSearchResults(BaseModel):
 
 class StudentSearchResults(BaseModel):
 
+    """
+    Class representing student search results.
+
+    Attributes:
+        search_results (List[MinimalSearchResults]): A list of minimal
+            search results.
+        k (int): The number of top results to return.
+    """
+
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
@@ -82,6 +129,13 @@ class StudentSearchResults(BaseModel):
 
 class MinimalAnswer(MinimalSearchResults):
 
+    """
+    Class representing a minimal answer.
+
+    Attributes:
+        answer (str): The answer to the question.
+    """
+
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
     # +---------------------------------------------------------------------+
@@ -90,6 +144,14 @@ class MinimalAnswer(MinimalSearchResults):
 
 
 class StudentSearchResultsAndAnswer(StudentSearchResults):
+
+    """
+    Class representing student search results and an answer.
+
+    Attributes:
+        search_results (List[MinimalAnswer]): A list of minimal answers.
+        k (int): The number of top results to return.
+    """
 
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
@@ -100,6 +162,17 @@ class StudentSearchResultsAndAnswer(StudentSearchResults):
 
 
 class AnsweredQuestion(UnansweredQuestion):
+
+    """
+    Class representing an answered question.
+
+    Attributes:
+        sources (List[MinimalSource]): A list of sources used to answer
+            the question.
+        answer (str): The answer to the question.
+        difficulty (str): The difficulty level of the question.
+        is_valid (bool): A flag indicating whether the answer is valid.
+    """
 
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |
@@ -112,6 +185,14 @@ class AnsweredQuestion(UnansweredQuestion):
 
 
 class RagDataset(BaseModel):
+
+    """
+    Class representing a RAG dataset.
+
+    Attributes:
+        rag_questions (List[AnsweredQuestion | UnansweredQuestion]): A list of
+            answered or unanswered questions in the dataset.
+    """
 
     # +---------------------------------------------------------------------+
     # |                            Attributs                                |

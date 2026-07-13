@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/07/02 14:52:01 by alebaron                                #
-# @update   : 2026/07/04 11:18:33 by alebaron                                #
+# @update   : 2026/07/13 11:17:16 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -32,12 +32,34 @@ from ...models.models import StudentSearchResults
 
 class Evaluation():
 
+    """
+    Class representing the evaluation of student search results against a
+    dataset of answered questions.
+
+    Methods:
+        evaluate(): Evaluates the student search results and prints the
+            recall@k metrics.
+    """
+
     # +---------------------------------------------------------------------+
     # |                                 Init                                |
     # +---------------------------------------------------------------------+
 
     def __init__(this, student_answer_path: str, dataset_path: str,
                  k: int, max_context_length: int):
+
+        """
+        Initializes the Evaluation class.
+
+        Args:
+            student_answer_path (str): The path to the student's search
+                results.
+            dataset_path (str): The path to the dataset of answered questions.
+            k (int): The number of top search results to consider for
+                evaluation.
+            max_context_length (int): The maximum length of context to consider
+                for evaluation.
+        """
 
         # Initialisation des valeurs
         this.__student_answer_path = student_answer_path
@@ -69,6 +91,11 @@ class Evaluation():
     # +---------------------------------------------------------------------+
 
     def evaluate(this) -> None:
+
+        """
+        Evaluates the student search results against the dataset of answered
+        questions and prints the recall@k metrics.
+        """
 
         # Initialisation des variables
         lst_ans_chunk = this.__get_cmp_text()

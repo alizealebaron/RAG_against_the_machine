@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/07/13 10:29:59 by alebaron                                #
+# @update   : 2026/07/13 11:19:40 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -44,11 +44,26 @@ BM25_PATH = f"{DATA_PATH}/processed/bm25_index"
 
 class Index():
 
+    """
+    Class representing the indexing functionality.
+
+    Methods:
+        indexing(): Indexes the documents in the specified directory and
+            saves the chunks and BM25 index to the specified paths.
+    """
+
     # +---------------------------------------------------------------------+
     # |                                 Init                                |
     # +---------------------------------------------------------------------+
 
     def __init__(this, max_chunk_size: int):
+
+        """
+        Initializes the Index class.
+
+        Args:
+            max_chunk_size (int): The maximum size of each chunk.
+        """
 
         this.__max_chunk_size = max_chunk_size
         this.__nb_doc = this.__get_nb_doc(VLLM_PATH)
@@ -65,6 +80,11 @@ class Index():
     # +---------------------------------------------------------------------+
 
     def indexing(this) -> None:
+
+        """
+        Indexes the documents in the specified directory and saves the chunks
+        and BM25 index to a specified paths.
+        """
 
         # Initialisation de la barre de progression
         progress_bar = tqdm(total=this.__nb_doc, desc="Chunking vllm files")

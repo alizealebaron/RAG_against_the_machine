@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/07/13 10:54:16 by alebaron                                #
+# @update   : 2026/07/13 11:17:45 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -40,6 +40,13 @@ except Exception:
 
 def index(max_chunk_size: int = 2000) -> None:
 
+    """
+    Function to index the data and create the BM25 index.
+
+    Args:
+        max_chunk_size (int): The maximum size of each chunk. Default is 2000.
+    """
+
     try:
         index = Index(max_chunk_size)
         index.indexing()
@@ -51,6 +58,14 @@ def index(max_chunk_size: int = 2000) -> None:
 
 
 def search(question: str, k: int = 10) -> None:
+
+    """
+    Function to search for the most relevant chunks based on a question.
+
+    Args:
+        question (str): The question to search for.
+        k (int): The number of top results to return. Default is 10.
+    """
 
     print(" Begin of search ".center(70, "~"))
 
@@ -66,11 +81,18 @@ def search(question: str, k: int = 10) -> None:
     print(" Search completed ! ".center(70, "~") + "\n")
 
 
-def search_dataset(
-    dataset_path: str,
-    save_directory: str,
-    k: int = 10,
-) -> None:
+def search_dataset(dataset_path: str,
+                   save_directory: str,
+                   k: int = 10) -> None:
+
+    """
+    Function to search for the most relevant chunks based on a dataset.
+
+    Args:
+        dataset_path (str): The path to the dataset to search.
+        save_directory (str): The directory to save the search results.
+        k (int): The number of top results to return. Default is 10.
+    """
 
     print(" Begin of search ".center(70, "~"))
 
@@ -91,6 +113,14 @@ def search_dataset(
 
 def answer(question: str, k: int = 10) -> None:
 
+    """
+    Function to answer a question based on the most relevant chunks.
+
+    Args:
+        question (str): The question to answer.
+        k (int): The number of top results for answering. Default is 10.
+    """
+
     print(" Begin of answer ".center(70, "~"))
 
     try:
@@ -107,6 +137,16 @@ def answer(question: str, k: int = 10) -> None:
 def answer_dataset(student_search_results_path: str,
                    save_directory: str, k: int = 10) -> None:
 
+    """
+    Function to answer questions based on a dataset of search results.
+
+    Args:
+        student_search_results_path (str): The path to the dataset of search
+            results.
+        save_directory (str): The directory to save the answers.
+        k (int): The number of top results for answering. Default is 10.
+    """
+
     print(" Begin of answer ".center(70, "~"))
 
     try:
@@ -122,12 +162,21 @@ def answer_dataset(student_search_results_path: str,
         print(" Answer completed ! ".center(70, "~") + "\n")
 
 
-def evaluate(
-    student_answer_path: str,
-    dataset_path: str,
-    k: int = 10,
-    max_context_length: int = 2000,
-) -> None:
+def evaluate(student_answer_path: str,
+             dataset_path: str,
+             k: int = 10,
+             max_context_length: int = 2000) -> None:
+
+    """
+    Function to evaluate the answers based on a dataset of search results.
+
+    Args:
+        student_answer_path (str): The path to the dataset of answers.
+        dataset_path (str): The path to the dataset to evaluate against.
+        k (int): The number of top results for evaluation. Default is 10.
+        max_context_length (int): The maximum length of context to consider
+            for evaluation. Default is 2000.
+    """
 
     print(" Begin of evaluation ".center(70, "~"))
 

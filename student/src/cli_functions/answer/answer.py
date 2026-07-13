@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/15 10:54:32 by alebaron                                #
-# @update   : 2026/07/02 15:08:49 by alebaron                                #
+# @update   : 2026/07/13 11:15:42 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -42,6 +42,14 @@ INDEX_PATH = "../data/processed/chunks/chunk.json"
 
 class Answer():
 
+    """
+    Class representing the answer functionality.
+
+    Methods:
+        answer_single(): Generates an answer for a single question.
+        answer_dataset(): Generates answers for a dataset of questions.
+    """
+
     # +---------------------------------------------------------------------+
     # |                                 Init                                |
     # +---------------------------------------------------------------------+
@@ -49,6 +57,19 @@ class Answer():
     def __init__(this, k: int, question: str | None = None,
                  search_path: str | None = None,
                  save_path: str | None = None) -> None:
+
+        """
+        Initializes the Answer class.
+
+        Args:
+            k (int): The number of top search results to consider for
+                answering.
+            question (str | None): The question to answer. Default is None.
+            search_path (str | None): The path to the search results.
+                Default is None.
+            save_path (str | None): The path to save the answers.
+                Default is None.
+        """
 
         # Initialisation des attributs
         this.__k = k
@@ -77,6 +98,14 @@ class Answer():
 
     def answer_single(this) -> StudentSearchResultsAndAnswer:
 
+        """
+        Generates an answer for a single question.
+
+        Returns:
+            StudentSearchResultsAndAnswer: The answer along with the search
+                results.
+        """
+
         # Génération de la recherche pour une réponse unique
 
         searchModel = Search(this.__k, this.__question)
@@ -93,6 +122,13 @@ class Answer():
         return answer
 
     def answer_dataset(this) -> None:
+
+        """
+        Generates answers for a dataset of questions.
+
+        Raises:
+            AnswerError: If the search results path or save path is missing.
+        """
 
         if this.__search_path is None:
             raise AnswerError("Search results path is missing.")
