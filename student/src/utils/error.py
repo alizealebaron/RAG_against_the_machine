@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/27 14:26:28 by alebaron                                #
-# @update   : 2026/07/02 15:05:36 by alebaron                                #
+# @update   : 2026/07/13 10:36:31 by alebaron                                #
 # ************************************************************************** #
 
 # +--------------------------------------------------------------------------+
@@ -63,7 +63,7 @@ class EvaluateError(Exception):
 # |                                 Function                                 |
 # +--------------------------------------------------------------------------+
 
-def exit_error(error_type: Exception, message: str) -> NoReturn:
+def exit_error(error_type: Exception, message: Exception | str) -> NoReturn:
     """
     Print an error message and exit the program.
 

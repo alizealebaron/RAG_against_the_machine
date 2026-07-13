@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/26 12:46:41 by alebaron                                #
-# @update   : 2026/07/03 10:04:45 by alebaron                                #
+# @update   : 2026/07/13 10:37:50 by alebaron                                #
 # ************************************************************************** #
 
 # ============================================================================
@@ -80,12 +80,6 @@ lint:
 	@echo "$(PINK)$(BOLD)[Checking mypy and flake8 norm]$(RESET)"
 	@-uv run flake8 ${SRC} 
 	@-uv run mypy ${SRC} $(MYPY_FLAGS)
-
-# Checking flake8 and mypy norm in strict mode
-lint-strict:
-	@echo "$(PINK)$(BOLD)[Checking mypy and flake8 norm in strict mode]$(RESET)"
-	@-uv run flake8 ${SRC}
-	@-uv run mypy ${SRC} $(MYPY_FLAGS) --strict
 
 # ============================================================================
 #                            Quality of life Rules
@@ -160,5 +154,5 @@ evaluate : install
 # ============================================================================
 
 # Prevent rule to be associated with files.
-.PHONY: install clean run debug lint lint-strict all help
+.PHONY: install clean run debug lint all help index search search_dataset answer answer_dataset evaluate
 .SILENT:

@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 15:11:09 by alebaron                                #
-# @update   : 2026/07/13 10:27:38 by alebaron                                #
+# @update   : 2026/07/13 10:29:59 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -64,7 +64,7 @@ class Index():
     # |                           Indexing Methods                          |
     # +---------------------------------------------------------------------+
 
-    def indexing(this):
+    def indexing(this) -> None:
 
         # Initialisation de la barre de progression
         progress_bar = tqdm(total=this.__nb_doc, desc="Chunking vllm files")
@@ -125,7 +125,7 @@ class Index():
         # Initialisation des variables
         header_pattern = r"^#{1,5}\s+.+$"
         lines = text.splitlines(True)
-        current_chunk = []
+        current_chunk: List[str] = []
         current_header = ""
         current_length = 0
 
@@ -286,7 +286,7 @@ class Index():
 
         return nb_doc
 
-    def __verify_chunk_size(this):
+    def __verify_chunk_size(this) -> None:
 
         i = 0
         for chunk in this.__lst_chunk:

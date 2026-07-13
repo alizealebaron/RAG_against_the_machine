@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/15 11:16:02 by alebaron                                #
-# @update   : 2026/07/13 10:26:25 by alebaron                                #
+# @update   : 2026/07/13 10:35:54 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -46,7 +46,7 @@ class Search():
 
     def __init__(this, k: int, question: str | None = None,
                  dataset_path: str | None = None,
-                 save_path: str | None = None):
+                 save_path: str | None = None) -> None:
 
         # Erreur si jamais l'index n'est pas initialisé
         if (this.__is_path_init(INDEX_PATH) is False):
@@ -86,6 +86,12 @@ class Search():
         return search_result
 
     def search_dataset(this) -> None:
+
+        if this.__dataset_path is None:
+            raise SearchError("Dataset path is missing.")
+
+        if this.__save_path is None:
+            raise SearchError("Save path is missing.")
 
         # Récupération du dataset et des questions
         with open(this.__dataset_path, "r") as file:
@@ -131,13 +137,15 @@ class Search():
     # +---------------------------------------------------------------------+
 
     def __get_min_search_result(this, id: str,
-                                question: str) -> MinimalSearchResults:
+                                question: str | None) -> MinimalSearchResults:
+
+        query_text = question if question is not None else ""
 
         min_search_res = MinimalSearchResults(question_id=id,
-                                              question_str=question,
+                                              question_str=query_text,
                                               retrieved_sources=[])
 
-        query_tokens = bm25s.tokenize(question)
+        query_tokens = bm25s.tokenize(query_text)
         docs, scores = this.__retriever.retrieve(query_tokens,
                                                  k=this.__k)
 

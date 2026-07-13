@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/05/07 11:47:53 by alebaron                                #
-# @update   : 2026/07/13 10:23:30 by alebaron                                #
+# @update   : 2026/07/13 10:54:16 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -38,7 +38,7 @@ except Exception:
 # |                                 Classe                                  |
 # +-------------------------------------------------------------------------+
 
-def index(max_chunk_size=2000):
+def index(max_chunk_size: int = 2000) -> None:
 
     try:
         index = Index(max_chunk_size)
@@ -50,7 +50,7 @@ def index(max_chunk_size=2000):
     print("Ingestion complete! Indices saved under data/processed/")
 
 
-def search(question: str, k=10):
+def search(question: str, k: int = 10) -> None:
 
     print(" Begin of search ".center(70, "~"))
 
@@ -66,13 +66,20 @@ def search(question: str, k=10):
     print(" Search completed ! ".center(70, "~") + "\n")
 
 
-def search_dataset(dataset_path: str, save_directory: str, k=10) -> None:
+def search_dataset(
+    dataset_path: str,
+    save_directory: str,
+    k: int = 10,
+) -> None:
 
     print(" Begin of search ".center(70, "~"))
 
     try:
-        search = Search(k=k, dataset_path=dataset_path,
-                        save_path=save_directory)
+        search = Search(
+            k=k,
+            dataset_path=dataset_path,
+            save_path=save_directory,
+        )
         search.search_dataset()
 
     except Exception as e:
@@ -82,15 +89,15 @@ def search_dataset(dataset_path: str, save_directory: str, k=10) -> None:
         print(" Search completed ! ".center(70, "~") + "\n")
 
 
-def answer(question: str, k=10):
+def answer(question: str, k: int = 10) -> None:
 
     print(" Begin of answer ".center(70, "~"))
 
     try:
         answer = Answer(k, question=question)
         result = answer.answer_single()
-        result = result.search_results[0].answer
-        print(result)
+        answer_text = result.search_results[0].answer
+        print(answer_text)
     except Exception as e:
         exit_error(AnswerError(), e)
     finally:
@@ -98,7 +105,7 @@ def answer(question: str, k=10):
 
 
 def answer_dataset(student_search_results_path: str,
-                   save_directory: str, k=10):
+                   save_directory: str, k: int = 10) -> None:
 
     print(" Begin of answer ".center(70, "~"))
 
@@ -115,8 +122,12 @@ def answer_dataset(student_search_results_path: str,
         print(" Answer completed ! ".center(70, "~") + "\n")
 
 
-def evaluate(student_answer_path: str, dataset_path: str,
-             k=10, max_context_length=2000):
+def evaluate(
+    student_answer_path: str,
+    dataset_path: str,
+    k: int = 10,
+    max_context_length: int = 2000,
+) -> None:
 
     print(" Begin of evaluation ".center(70, "~"))
 

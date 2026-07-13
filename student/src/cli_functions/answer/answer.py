@@ -46,8 +46,9 @@ class Answer():
     # |                                 Init                                |
     # +---------------------------------------------------------------------+
 
-    def __init__(this, k: int, question=None, search_path=None,
-                 save_path=None):
+    def __init__(this, k: int, question: str | None = None,
+                 search_path: str | None = None,
+                 save_path: str | None = None) -> None:
 
         # Initialisation des attributs
         this.__k = k
@@ -60,8 +61,8 @@ class Answer():
             raise AnswerError(f"Cannot find {search_path}. Do search before.")
 
         if (int(this.__k) < 1):
-            print_error(Answer(), f"k value can't be < 1({k})."
-                                  "default value will be used (5).")
+            print_error(AnswerError(), f"k value can't be < 1({k})."
+                                       "default value will be used (5).")
             this.__k = 5
 
         # Initialisation du prompt inital
@@ -92,6 +93,12 @@ class Answer():
         return answer
 
     def answer_dataset(this) -> None:
+
+        if this.__search_path is None:
+            raise AnswerError("Search results path is missing.")
+
+        if this.__save_path is None:
+            raise AnswerError("Save path is missing.")
 
         # Récupération des résultats du search pour les datasets
         with open(this.__search_path, "r") as file:
@@ -181,16 +188,15 @@ class Answer():
 
     def __init_prompt_usr(this, shrc_res: MinimalSearchResults) -> str:
 
-        contexte = []
+        context_parts: list[str] = []
 
         for chunk in shrc_res.retrieved_sources:
+            context_parts.append(f"[Source: {chunk.file_path}]\n{chunk.text}")
 
-            contexte.append(f"[Source: {chunk.file_path}]\n{chunk.text}")
-
-        contexte = "\n\n---\n\n".join(contexte)
-        contexte = contexte[:3000]
-        contexte = contexte + "(truncated)"
-        start_prompt = (f"Contexte: {contexte}\n\n"
+        context_text = "\n\n---\n\n".join(context_parts)
+        context_text = context_text[:3000]
+        context_text = context_text + "(truncated)"
+        start_prompt = (f"Contexte: {context_text}\n\n"
                         f"Question : {this.__question}")
 
         return start_prompt
@@ -199,7 +205,7 @@ class Answer():
     # |                           Others Methods                            |
     # +---------------------------------------------------------------------+
 
-    def __is_path_init(this, path: str) -> bool:
+    def __is_path_init(this, path: str | None) -> bool:
 
         if (path is not None):
             return os.path.exists(path)
